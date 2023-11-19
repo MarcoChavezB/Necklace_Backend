@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::any('/ServerOn', function (){
     return response()->json([
-        'message' => 'Conexion Establecida'
+        'message' => 'Ya esta jalando el server tilines bastardes'
     ]);
 });
