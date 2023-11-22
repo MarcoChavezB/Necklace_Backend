@@ -24,3 +24,7 @@ Route::any('/ServerOn', function (){
         'message' => 'Ya esta jalando el server tilines bastardes'
     ]);
 });
+
+
+//Route::post('/login', 'login')->name('login');
+Route::post('/register', 'register');
