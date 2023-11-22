@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,4 @@ Route::any('/ServerOn', function (){
 
 
 //Route::post('/login', 'login')->name('login');
-Route::post('/register', 'register');
+Route::post('/register', [UserController::class, 'register']);
