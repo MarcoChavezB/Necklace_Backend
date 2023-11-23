@@ -121,6 +121,12 @@ class UserController extends Controller
         $id = $request->id;
 
         $user = User::where('id', $id)->first();
+        if(!$user){
+            return response()->json([
+                "msg"=>"Usuario no encontrado",
+            ],404);
+        }
+
         $Ndispositivos = DB::table('pets')
             ->join('pet_devices', 'pets.id', '=', 'pet_devices.pet_id')
             ->where('pets.user_id', $id)
