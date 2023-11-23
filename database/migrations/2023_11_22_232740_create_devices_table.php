@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('devices', function (Blueprint $table) {
-            $table->bigInteger('id')->autoIncrement(false)->primary();
+            $table->bigInteger('id')->primary();
             $table->string("dispositivo", 100);
             $table->timestamps();
         });
