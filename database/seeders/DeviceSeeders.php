@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class DeviceSeeders extends Seeder
@@ -14,8 +15,22 @@ class DeviceSeeders extends Seeder
      */
     public function run()
     {
-        DB:devices::create([
-            
-        ])
+        $array =[
+        [
+            'modelo' => 'Pechera',
+            'codigo' => 'P23112023'
+        ],
+        [
+            'modelo' => 'Pechera 2',
+            'codigo' => 'P23112024'
+        ],
+        [
+            'modelo' => 'Pechera 3',
+            'codigo' => 'P23112025'
+        ]
+        ];
+        foreach($array as $device){
+            DB::table('devices')->insert($device);
+        }
     }
 }
