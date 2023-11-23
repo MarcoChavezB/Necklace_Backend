@@ -105,7 +105,7 @@ class UserController extends Controller
     }
 
     public function InfoUsuario($id){
-        $user = User::table('users')->where('id', $id)->first();
+        $user = User::where('users')->where('id', $id)->first();
 
         $Ndispositivos = DB::table('pets')
             ->join('pet_devices', 'pets.id', '=', 'pet_devices.pet_id')
@@ -117,7 +117,7 @@ class UserController extends Controller
             "apellido" => $user->apellido,
             "email" => $user->email,
             "Ndispositivos" => $Ndispositivos,
-        ],200);
+        ], 200);
     }
 
 }
