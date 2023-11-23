@@ -27,5 +27,5 @@ Route::any('/ServerOn', function (){
 });
 
 
-//Route::post('/login', 'login')->name('login');
 Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login'])->name('login');

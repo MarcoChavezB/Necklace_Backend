@@ -8,6 +8,30 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
+
+    public function __construct(){//Aqui se especifica que metodos necesitan autenticacion
+        $this->middleware('auth:api', ['except' => ['register', 'login']]); //Aqui se especifica que metodos no necesitan autenticacion
+    }
+
+    public function login(){
+        $credentials = request(['email', 'password']);//Aqui se obtienen las credenciales del usuario
+
+        if(! $token = auth()->attempt($credentials)){//Aqui se verifica si las credenciales son correctas
+            return response()->json([
+                'msg' => 'No autorizado'
+            ], 401);
+        }
+
+        return $this->respondWithToken($token);//Aqui se genera el token
+    }
+
+    protected  function respondWithToken($token){//Aqui se genera el token
+        return response()->json([
+            'access_token' => $token,//Aqui se especifica el token
+            'token_type' => 'bearer',//Aqui se especifica el tipo de token
+            'expires_in' => auth()->factory()->getTTL() * 60//Aqui se especifica el tiempo de expiracion del token
+        ]);
+    }
     public function register(Request $request){
         $validate = Validator::make(
             $request->all(),
