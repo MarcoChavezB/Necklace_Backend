@@ -45,7 +45,7 @@ protected $fillable = [
     'nombre',
     'apellido',
     'email',
-    'contraseña',
+    'password',
 ];
 
 
@@ -55,7 +55,7 @@ protected $fillable = [
  * @var array<int, string>
  */
 protected $hidden = [
-    'contraseña',
+    'password',
 ];
 
 
