@@ -114,7 +114,7 @@ class UserController extends Controller
         }
 
         $Ndispositivos = DB::table('pets')
-            ->join('pet_device', 'pets.id', '=', 'pet_devices.pet_id')
+            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
             ->where('pets.user_id', $id)
             ->count();
 
