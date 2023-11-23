@@ -17,7 +17,7 @@ class UserController extends Controller
     }
 
     public function login(){
-        $credentials = request(['email', 'contraseña']);//Aqui se obtienen las credenciales del usuario
+        $credentials = request(['email', 'password']);//Aqui se obtienen las credenciales del usuario
 
         if(! $token = auth()->attempt($credentials)){//Aqui se verifica si las credenciales son correctas
             return response()->json([

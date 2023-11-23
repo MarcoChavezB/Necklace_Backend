@@ -13,10 +13,6 @@ class User  extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function getAuthPassword()
-    {
-        return $this->contraseña;
-    }
 
 
     /**
