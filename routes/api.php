@@ -38,3 +38,4 @@ Route::middleware('auth:api')->post('/link-device', [UserController::class, 'lin
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
+Route::post('/infoDispositivo/{id}', [PetControllerProvicional::class, 'detallesDispositivo']);
