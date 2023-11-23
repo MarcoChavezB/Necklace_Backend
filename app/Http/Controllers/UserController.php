@@ -104,9 +104,23 @@ class UserController extends Controller
 
     }
 
-    public function InfoUsuario($id){
-        $user = User::where('users')->where('id', $id)->first();
+    public function InfoUsuario(Request $request){
+        $validate = Validator::make(
+            $request->all(),
+            [
+                "id" => "required"
+            ]
+        );
 
+        if($validate->fails()){
+            return response()->json([
+                "msg"=>"Error al validar el ID",
+                "error"=>$validate->errors()
+            ],422);
+        }
+        $id = $request->id;
+
+        $user = User::where('id', $id)->first();
         $Ndispositivos = DB::table('pets')
             ->join('pet_devices', 'pets.id', '=', 'pet_devices.pet_id')
             ->where('pets.user_id', $id)
