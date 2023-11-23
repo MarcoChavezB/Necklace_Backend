@@ -7,11 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
-
-
-
 
     public function __construct(){//Aqui se especifica que metodos necesitan autenticacion
         $this->middleware('auth:api', ['except' => ['register', 'login']]); //Aqui se especifica que metodos no necesitan autenticacion
@@ -20,29 +18,60 @@ class UserController extends Controller
     public function login(){
         $credentials = request(['email', 'password']);//Aqui se obtienen las credenciales del usuario
 
+        $validate = Validator::make(
+            $credentials,
+            [
+                "email"      =>"required|email",
+                "password" =>"required|min:8"
+            ]
+        );
+
+        if($validate->fails()){
+            return response()->json([
+                "msg"=>"Error al validar los datos",
+                "error"=>$validate->errors()
+            ],422);
+        }
+
         if(! $token = auth()->attempt($credentials)){//Aqui se verifica si las credenciales son correctas
             return response()->json([
                 'msg' => 'No autorizado'
             ], 401);
         }
-
-        return $this->respondWithToken($token);//Aqui se genera el token
+        return $this->respondWithToken($token, $credentials['email']);//Aqui se genera el token
     }
 
-    protected  function respondWithToken($token){//Aqui se genera el token
+    protected  function respondWithToken($token, $email){//Aqui se genera el token
+        $isActive = $this->isActive($email);
         return response()->json([
             'access_token' => $token,//Aqui se especifica el token
             'token_type' => 'bearer',//Aqui se especifica el tipo de token
-            'expires_in' => auth()->factory()->getTTL() * 60//Aqui se especifica el tiempo de expiracion del token
+            'isActive' => $isActive,
+            //Que el token dure 5 segundos?
+            'expires_in' => auth()->factory()->getTTL() * 1,//Aqui se especifica el tiempo de expiracion del token
         ]);
     }
+
+    public function isActive($email){
+        $user = User::where('email', $email)->first();
+        if($user){
+            $isActive = $user->esta_activo;
+            return $isActive;
+        }
+        else {
+            return response()->json([
+                'msg' => 'Usuario no encontrado'
+            ], 404);
+        }
+    }
+
     public function register(Request $request){
         $validate = Validator::make(
             $request->all(),
             [
                 "nombre"    =>"required|max:100|min:4",
                 "apellido"  =>"required|max:100|min:4",
-                "email"      =>"required",
+                "email"      =>"required|email",
                 "password" =>"required|min:8"
             ]
         );
