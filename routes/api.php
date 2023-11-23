@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PetControllerProvicional;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +31,10 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::middleware('auth:api')->post('/link-device', [UserController::class, 'linkDevice'])->name('link-device');
 
-Route::middleware('auth:api')->group(function (){
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-});
 
 
 
+
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
+Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
