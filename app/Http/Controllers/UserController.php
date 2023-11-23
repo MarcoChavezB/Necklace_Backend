@@ -64,6 +64,12 @@ class UserController extends Controller
             ], 404);
         }
     }
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
 
     public function register(Request $request){
         $validate = Validator::make(
@@ -97,4 +103,5 @@ class UserController extends Controller
         ],201);
 
     }
+
 }
