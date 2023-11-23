@@ -28,6 +28,7 @@ Route::any('/ServerOn', function (){
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::middleware('auth:api')->post('/link-device', [UserController::class, 'linkDevice'])->name('link-device');
 
 Route::middleware('auth:api')->group(function (){
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
