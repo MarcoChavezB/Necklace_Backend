@@ -32,5 +32,5 @@ Route::middleware('auth:api')->post('/link-device', [UserController::class, 'lin
 
 Route::middleware('auth:api')->group(function (){
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-    Route::get('/InfoUsuario', [UserController::class, 'InfoUsuario']);
+    Route::post('/InfoUsuario', [UserController::class, 'InfoUsuario']);
 });
