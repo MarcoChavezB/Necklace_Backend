@@ -13,6 +13,11 @@ class User  extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function getAuthPassword()
+    {
+        return $this->contraseña;
+    }
+
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

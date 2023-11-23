@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+
+
+
     public function __construct(){//Aqui se especifica que metodos necesitan autenticacion
         $this->middleware('auth:api', ['except' => ['register', 'login']]); //Aqui se especifica que metodos no necesitan autenticacion
     }
