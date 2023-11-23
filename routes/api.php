@@ -18,8 +18,6 @@ use App\Http\Controllers\UserController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
 Route::any('/ServerOn', function (){
     return response()->json([
         'message' => 'Ya esta jalando el server tilines bastardes'
@@ -27,6 +25,11 @@ Route::any('/ServerOn', function (){
 });
 
 
+
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::middleware('auth:api')->group(function (){
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/InfoUsuario', [UserController::class, 'InfoUsuario']);
+});
