@@ -104,27 +104,13 @@ class UserController extends Controller
 
     }
 
-    public function InfoUsuario(Request $request){
-        $validate = Validator::make(
-            $request->all(),
-            [
-                "id" => "required"
-            ]
-        );
-
-        if($validate->fails()){
-            return response()->json([
-                "msg"=>"Error al validar el ID",
-                "error"=>$validate->errors()
-            ],422);
-        }
-        $id = $request->id;
-
+    public function InfoUsuario($id){
         $user = User::where('id', $id)->first();
-        if(!$user){
+
+        if (!$user) {
             return response()->json([
-                "msg"=>"Usuario no encontrado",
-            ],404);
+                "msg" => "No se encontró ningún usuario con el ID proporcionado"
+            ], 404);
         }
 
         $Ndispositivos = DB::table('pets')
@@ -139,6 +125,7 @@ class UserController extends Controller
             "Ndispositivos" => $Ndispositivos,
         ], 200);
     }
+
 
 
 

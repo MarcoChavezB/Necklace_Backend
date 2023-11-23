@@ -35,4 +35,5 @@ Route::middleware('auth:api')->group(function (){
 });
 
 
-Route::post('/InfoUsuario', [UserController::class, 'InfoUsuario']);
+
+Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
