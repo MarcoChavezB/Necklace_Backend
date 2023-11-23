@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->string("dispositivo", 100);
+            $table->string("modelo", 100); //Pechera
+            $table->string("codigo", 100); //P23112023
             $table->timestamps();
         });
     }
