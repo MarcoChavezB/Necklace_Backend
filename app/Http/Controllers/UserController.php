@@ -104,6 +104,44 @@ class UserController extends Controller
 
     }
 
+    public function InfoUsuario($id){
+        $user = User::where('id', $id)->first();
+
+        if (!$user) {
+            return response()->json([
+                "msg" => "No se encontró ningún usuario con el ID proporcionado"
+            ], 404);
+        }
+
+        $Ndispositivos = DB::table('pets')
+            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
+            ->where('pets.user_id', $id)
+            ->count();
+
+        return response()->json([
+            "nombre" => $user->nombre,
+            "apellido" => $user->apellido,
+            "email" => $user->email,
+            "Ndispositivos" => $Ndispositivos,
+        ], 200);
+    }
+
+    public function getUserDevices($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // Obtener los dispositivos asociados al usuario
+        $devices = $user->pets->flatMap(function ($pet) {
+            return $pet->PetDevices->map->device;
+        });
+
+        return response()->json($devices);
+    }
+
 
 
 

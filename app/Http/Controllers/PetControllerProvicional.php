@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
+use App\Models\Pet;
+use App\Models\Pet_Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -80,14 +83,14 @@ class PetControllerProvicional extends Controller
         }
 
         // Verifica si el dispositivo ya está vinculado previamente
-        if (PetDevices::where('device_id', $device->id)->where('pet_id', $pet->id)->exists()) {
+        if (Pet_Device::where('device_id', $device->id)->where('pet_id', $pet->id)->exists()) {
             return response()->json([
                 "msg" => "Dispositivo ya vinculado previamente",
             ], 422);
         }
 
         // Vincula el dispositivo a la mascota
-        PetDevices::create([
+        Pet_Device::create([
             'device_id'   => $device->id,
             'pet_id' => $pet->id,
         ]);
