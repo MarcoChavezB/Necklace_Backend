@@ -31,13 +31,13 @@ Route::any('/ServerOn', function (){
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
+
+
+
+
+
 // Vinculacion de mascota con dispositivo
-Route::post('/link-device', [DevicesController::class, 'linkDispo'])->name('link-device');
-
-
-
-
-
+Route::post('/link-device', [PetControllerProvicional::class, 'linkDispo'])->name('link-device');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
