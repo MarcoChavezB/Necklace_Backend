@@ -67,7 +67,7 @@ class PetController extends Controller
             $request->all(),
             [
                 "mascota"   => "required|exists:pets,id",
-                "modelo"    => "required|exists:devices,id",
+                "codigo"    => "required|exists:devices,codigo",
             ]
         );
 
@@ -78,12 +78,17 @@ class PetController extends Controller
             ], 422);
         }
 
-        $pet = Pet::find($request->mascota);
-        $device = Device::find($request->modelo);
+        $pet = Pet::where('id', $request->mascota)->first();
+        $device = Device::where('codigo', $request->codigo)->first();
 
         if (!$device) {
             return response()->json([
-                "msg" => "Dispositivo no encontrado",
+                "msg" => "Codigo no encontrado",
+            ], 404);
+        }
+        if (!$pet) {
+            return response()->json([
+                "msg" => "Mascota no encontrada",
             ], 404);
         }
 
@@ -105,5 +110,25 @@ class PetController extends Controller
         ], 201);
     }
 
+    public function UnlinkPetToDisp($id)
+    {
+        $pet = Pet_Device::where('id', $id)->first();
+
+        if (!$pet) {
+            return response()->json([
+                "msg"   => "Dispositivo no encontrado",
+            ], 422);
+        }
+
+        $pet->delete();
+        return response()->json([
+            "msg" => "Dispositivo desvinculado",
+        ], 201);
+    }
+
+    public function getDisplinks(){
+        $pet = Pet_Device::all();
+        return $pet;
+    }
 
 }
