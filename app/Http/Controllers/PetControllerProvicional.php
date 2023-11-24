@@ -20,11 +20,11 @@ class PetControllerProvicional extends Controller
             ->join('devices', 'pet_device.device_id', '=', 'devices.id')
             ->select('pets.id','pets.nombre', 'pets.raza', 'pets.genero', 'devices.codigo')
             ->where('pets.id', $petId)
-            ->first();
+            ->get();
 
         if(!$pets){
             return response()->json([
-                "msg" => "Perro no encontrado",
+                "msg" => "Mascota no encontrada",
             ], 404);
         }
         return response()->json([$pets], 200);
@@ -37,8 +37,13 @@ class PetControllerProvicional extends Controller
             ->join('pets', 'pets.id', '=', 'pet_device.pet_id')
             ->select('devices.id','devices.modelo', 'devices.codigo', 'pets.nombre')
             ->where('devices.id', $deviceId)
-            ->first();
-        return $devices;
+            ->get();
+        if(!$devices){
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+        }
+        return response()->json([$devices], 200);
 
     }
 
@@ -50,7 +55,12 @@ class PetControllerProvicional extends Controller
             ->select('devices.modelo', 'devices.codigo')
             ->where('users.id', $userId)
             ->get();
-        return $devices;
+        if(!$devices){
+            return response()->json([
+                "msg" => "No tiene dispositivos vinculados",
+            ], 404);
+        }
+        return response()->json([$devices], 200);
     }
 
     public function perrosxUsuario($userID){
@@ -59,7 +69,12 @@ class PetControllerProvicional extends Controller
             ->select('pets.id','pets.nombre', 'pets.raza', 'pets.genero')
             ->where('users.id', $userID)
             ->get();
-        return $pets;
+        if(!$pets){
+            return response()->json([
+                "msg" => "No tiene mascotas registradas",
+            ], 404);
+        }
+        return response()->json([$pets], 200);
     }
 
     public function linkPetToDisp(Request $request)
