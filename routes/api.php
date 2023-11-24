@@ -41,3 +41,6 @@ Route::post('/link-device', [DevicesController::class, 'linkDispo'])->name('link
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
+Route::post('/infoDispositivo/{id}', [PetControllerProvicional::class, 'detallesDispositivo']);
+Route::post('/dispositivosxUsuario/{id}', [PetControllerProvicional::class, 'dispositivosxUsuario']);
+Route::post('/perrosxUsuario/{id}', [PetControllerProvicional::class, 'perrosxUsuario']);
