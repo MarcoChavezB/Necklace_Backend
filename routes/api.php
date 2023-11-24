@@ -39,4 +39,5 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
 Route::post('/infoDispositivo/{id}', [PetControllerProvicional::class, 'detallesDispositivo']);
-Route::post('/dispositivoxUsuario/{id}', [PetControllerProvicional::class, 'dispositivoxUsuario']);
+Route::post('/dispositivosxUsuario/{id}', [PetControllerProvicional::class, 'dispositivosxUsuario']);
+Route::post('/perrosxUsuario/{id}', [PetControllerProvicional::class, 'perroxsUsuario']);
