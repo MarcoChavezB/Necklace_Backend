@@ -13,6 +13,12 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
+
+
 
 
     /**
