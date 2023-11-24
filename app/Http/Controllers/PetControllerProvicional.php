@@ -20,14 +20,14 @@ class PetControllerProvicional extends Controller
             ->join('devices', 'pet_device.device_id', '=', 'devices.id')
             ->select('pets.id','pets.nombre', 'pets.raza', 'pets.genero', 'devices.codigo')
             ->where('pets.id', $petId)
-            ->get();
+            ->first();
 
         if(!$pets){
             return response()->json([
                 "msg" => "Mascota no encontrada",
             ], 404);
         }
-        return response()->json([$pets], 200);
+        return $pets;
     }
 
     public function detallesDispositivo($deviceId){
@@ -37,13 +37,13 @@ class PetControllerProvicional extends Controller
             ->join('pets', 'pets.id', '=', 'pet_device.pet_id')
             ->select('devices.id','devices.modelo', 'devices.codigo', 'pets.nombre')
             ->where('devices.id', $deviceId)
-            ->get();
+            ->first();
         if(!$devices){
             return response()->json([
                 "msg" => "Dispositivo no encontrado",
             ], 404);
         }
-        return response()->json([$devices], 200);
+        return $devices;
 
     }
 
@@ -60,7 +60,7 @@ class PetControllerProvicional extends Controller
                 "msg" => "No tiene dispositivos vinculados",
             ], 404);
         }
-        return response()->json([$devices], 200);
+        return $devices;
     }
 
     public function perrosxUsuario($userID){
@@ -74,7 +74,7 @@ class PetControllerProvicional extends Controller
                 "msg" => "No tiene mascotas registradas",
             ], 404);
         }
-        return response()->json([$pets], 200);
+        return $pets;
     }
 
     public function linkPetToDisp(Request $request)
