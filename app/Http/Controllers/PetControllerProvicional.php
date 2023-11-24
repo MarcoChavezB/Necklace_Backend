@@ -47,22 +47,6 @@ class PetControllerProvicional extends Controller
 
     }
 
-    public function dispositivosxUsuario($userId){
-        $devices = DB::table('users')
-            ->join('pets', 'users.id', '=', 'pets.user_id')
-            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
-            ->join('devices', 'devices.id', '=', 'pet_device.device_id')
-            ->select('devices.modelo', 'devices.codigo')
-            ->where('users.id', $userId)
-            ->get();
-        if(!$devices){
-            return response()->json([
-                "msg" => "No tiene dispositivos vinculados",
-            ], 404);
-        }
-        return $devices;
-    }
-
     public function perrosxUsuario($userID){
         $pets = DB::table('pets')
             ->join('users', 'pets.user_id', '=', 'users.id')
