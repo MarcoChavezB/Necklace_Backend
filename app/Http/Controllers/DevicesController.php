@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pet_Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Device;
-use App\Models\PetDevices;
 use App\Models\Pet;
 use App\Models\User;
 
@@ -24,13 +24,13 @@ class DevicesController extends Controller
             return response()->json([
                 "msg" => "Dispositivo no encontrado",
             ], 404);
-        } 
-        $petdevice = PetDevices::where('pet_id', $id)->first();
+        }
+        $petdevice = Pet_Device::where('pet_id', $id)->first();
         if ($petdevice) {
             return response()->json([
                 "msg" => "Ya existe un dispositivo vinculado a esta mascota",
             ], 404);
-        } 
+        }
     }
 
     public function getCountDispo($id){
@@ -40,7 +40,7 @@ class DevicesController extends Controller
                 "msg" => "Usuario no encontrado",
             ], 404);
         }
-        $count = PetDevices::where('pet_id', $id)->count();
+        $count = Pet_Device::where('pet_id', $id)->count();
         return response()->json([
             "msg" => "Cantidad de dispositivos",
             "count" => $count

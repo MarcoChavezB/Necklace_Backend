@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\PetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PetControllerProvicional;
 use App\Http\Controllers\DevicesController;
 
 /*
@@ -20,11 +20,11 @@ use App\Http\Controllers\DevicesController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::any('/ServerOn', function (){
-    return response()->json([
-        'message' => 'Ya esta jalando el server tilines bastardes'
-    ]);
-});
+
+
+
+
+
 
 
 
@@ -41,8 +41,14 @@ Route::get('/getdislinks', [PetControllerProvicional::class, 'getDisplinks'])->n
 Route::post('/link-device', [PetControllerProvicional::class, 'linkPetToDisp'])->name('link-device');
 Route::post('/unlink-device/{id}', [PetControllerProvicional::class, 'UnlinkPetToDisp'])->name('unlink-device');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
-Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
-Route::post('/infoDispositivo/{id}', [PetControllerProvicional::class, 'detallesDispositivo']);
-Route::post('/perrosxUsuario/{id}', [PetControllerProvicional::class, 'perrosxUsuario']);
+Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario'])->middleware('auth:api');
+Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro'])->middleware('auth:api');
+Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
+Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
+
+Route::any('/test', function (){
+    return response()->json([
+        "msg" => "No estas logeado"
+    ], 405);
+})->name('test');
