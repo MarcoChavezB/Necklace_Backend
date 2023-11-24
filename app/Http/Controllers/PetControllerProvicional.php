@@ -34,4 +34,16 @@ class PetControllerProvicional extends Controller
 
     }
 
+    public function dispositivoxUsuario($userId){
+        $devices = DB::table('users')
+            ->join('pets', 'users.id', '=', 'pets.user_id')
+            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
+            ->join('devices', 'devices.id', '=', 'pet_device.device_id')
+            ->select('devices.modelo', 'devices.codigo')
+            ->where('users.id', $userId)
+            ->first();
+        return $devices;
+    }
+
+
 }
