@@ -34,11 +34,12 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 //DevicesController
 Route::get('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
-
+Route::get('/getdislinks', [PetControllerProvicional::class, 'getDisplinks'])->name('Dispositivos vinculados');
 
 
 // Vinculacion de mascota con dispositivo
 Route::post('/link-device', [PetControllerProvicional::class, 'linkPetToDisp'])->name('link-device');
+Route::post('/unlink-device/{id}', [PetControllerProvicional::class, 'UnlinkPetToDisp'])->name('unlink-device');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
