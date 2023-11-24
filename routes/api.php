@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PetControllerProvicional;
+use App\Http\Controllers\DevicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,25 +30,14 @@ Route::any('/ServerOn', function (){
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
-Route::middleware('auth:api')->post('/link-device', [UserController::class, 'linkDevice'])->name('link-device');
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Vinculacion de mascota con dispositivo
+Route::post('/link-device', [PetControllerProvicional::class, 'linkDispo'])->name('link-device');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
