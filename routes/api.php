@@ -20,11 +20,11 @@ use App\Http\Controllers\DevicesController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::any('/ServerOn', function (){
-    return response()->json([
-        'message' => 'Ya esta jalando el server tilines bastardes'
-    ]);
-});
+
+
+
+
+
 
 
 
