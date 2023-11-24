@@ -42,7 +42,6 @@ class DevicesController extends Controller
         }
         $count = Pet_Device::where('pet_id', $id)->count();
         return response()->json([
-            "msg" => "Cantidad de dispositivos",
             "count" => $count
         ], 200);
     }
