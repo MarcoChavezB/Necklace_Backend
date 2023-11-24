@@ -32,7 +32,8 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 
-
+//DevicesController
+Route::get('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
 
 
 
