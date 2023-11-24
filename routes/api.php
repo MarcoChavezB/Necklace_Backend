@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\PetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PetControllerProvicional;
 use App\Http\Controllers\DevicesController;
 
 /*
@@ -37,10 +37,10 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 
 // Vinculacion de mascota con dispositivo
-Route::post('/link-device', [PetControllerProvicional::class, 'linkPetToDisp'])->name('link-device');
+Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
-Route::post('/infoMascota/{id}', [PetControllerProvicional::class, 'detallesPerro']);
-Route::post('/infoDispositivo/{id}', [PetControllerProvicional::class, 'detallesDispositivo']);
-Route::post('/perrosxUsuario/{id}', [PetControllerProvicional::class, 'perrosxUsuario']);
+Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
+Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
+Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
