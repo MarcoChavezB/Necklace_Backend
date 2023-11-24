@@ -22,4 +22,48 @@ class PetControllerProvicional extends Controller
         return $pets;
     }
 
+    public function linkPetDisp(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                "user"   => "required|exists:users,id",
+                "modelo" => "required|exists:devices,id",
+            ]
+        );
+
+        if ($validate->fails()) {
+            return response()->json([
+                "msg"   => "Error al validar los datos",
+                "error" => $validate->errors()
+            ], 422);
+        }
+
+        $pet = Pet::find($request->user);
+        $device = Device::find($request->modelo);
+
+        if (!$device) {
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+        }
+
+        // Verifica si el dispositivo ya está vinculado previamente
+        if (PetDevices::where('device_id', $device->id)->where('pet_id', $pet->id)->exists()) {
+            return response()->json([
+                "msg" => "Dispositivo ya vinculado previamente",
+            ], 422);
+        }
+
+        // Vincula el dispositivo a la mascota
+        PetDevices::create([
+            'device_id'   => $device->id,
+            'pet_id' => $pet->id,
+        ]);
+
+        return response()->json([
+            "msg" => "Dispositivo vinculado",
+        ], 201);
+    }
+
 }

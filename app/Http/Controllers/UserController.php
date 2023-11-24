@@ -104,75 +104,7 @@ class UserController extends Controller
 
     }
 
-    public function InfoUsuario($id){
-        $user = User::where('id', $id)->first();
 
-        if (!$user) {
-            return response()->json([
-                "msg" => "No se encontró ningún usuario con el ID proporcionado"
-            ], 404);
-        }
-
-        $Ndispositivos = DB::table('pets')
-            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
-            ->where('pets.user_id', $id)
-            ->count();
-
-        return response()->json([
-            "nombre" => $user->nombre,
-            "apellido" => $user->apellido,
-            "email" => $user->email,
-            "Ndispositivos" => $Ndispositivos,
-        ], 200);
-    }
-
-
-
-
-
-
-
-    public function LinkDispo(Request $request)
-    {
-        $validate = Validator::make(
-            $request->all(),
-            [
-                "user"   => "required|exists:users,id",
-                "device" => "required|exists:devices,id"
-            ]
-        );
-
-        if ($validate->fails()) {
-            return response()->json([
-                "msg"   => "Error al validar los datos",
-                "error" => $validate->errors()
-            ], 422);
-        }
-
-        $user = User::find($request->user);
-        $device = \DB::table('devices')->find($request->device);
-
-        if (!$device) {
-            return response()->json([
-                "msg" => "Dispositivo no encontrado",
-            ], 404);
-        }
-
-        if (\DB::table('user_device')->where('user_id', $user->id)->where('device_id', $device->id)->first()) {
-            return response()->json([
-                "msg" => "Dispositivo ya vinculado previamente",
-            ], 422);
-        }
-
-        \DB::table('user_device')->insert([
-            'user_id'   => $user->id,
-            'device_id' => $device->id,
-        ]);
-
-        return response()->json([
-            "msg" => "Dispositivo vinculado",
-        ], 201);
-    }
 
 
 }
