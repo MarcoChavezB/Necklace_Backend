@@ -49,17 +49,17 @@ class DevicesController extends Controller
 
 
 
-    public function desvincularDispositivo($id)
-    {
-        $petdevice = Pet_Device::where('pet_id', $id)->first();
-        if (!$petdevice) {
-            return response()->json([
-                "msg" => "No existe un dispositivo vinculado a esta mascota",
-            ], 404);
-        }
-        $petdevice->delete();
-        return response()->json([
-            "msg" => "Dispositivo desvinculado",
-        ], 200);
-    }
+    // public function desvincularDispositivo($id)
+    // {
+    //     $petdevice = Pet_Device::where('pet_id', $id)->first();
+    //     if (!$petdevice) {
+    //         return response()->json([
+    //             "msg" => "No existe un dispositivo vinculado a esta mascota",
+    //         ], 404);
+    //     }
+    //     $petdevice->delete();
+    //     return response()->json([
+    //         "msg" => "Dispositivo desvinculado",
+    //     ], 200);
+    // }
 }
