@@ -12,7 +12,7 @@ class UserController extends Controller
 {
 
     public function __construct(){//Aqui se especifica que metodos necesitan autenticacion
-        $this->middleware('auth:api', ['except' => ['register', 'login', 'InfoUsuario']]); //Aqui se especifica que metodos no necesitan autenticacion
+        $this->middleware('auth:api', ['except' => ['register', 'login', 'InfoUsuario', 'getUserDevices']]); //Aqui se especifica que metodos no necesitan autenticacion
     }
 
     public function login(){
