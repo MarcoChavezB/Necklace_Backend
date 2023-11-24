@@ -41,8 +41,8 @@ Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispos
 Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
 Route::post('/unlink-device/{id}', [PetController::class, 'UnlinkPetToDisp'])->name('unlink-device');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario'])->middleware('auth:api');
-Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro'])->middleware('auth:api');
+Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
+Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
 Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
 Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
