@@ -18,10 +18,16 @@ class PetControllerProvicional extends Controller
         $pets = DB::table('pets')
             ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
             ->join('devices', 'pet_device.device_id', '=', 'devices.id')
-            ->select('pets.nombre', 'pets.raza', 'pets.genero', 'devices.codigo')
+            ->select('pets.id','pets.nombre', 'pets.raza', 'pets.genero', 'devices.codigo')
             ->where('pets.id', $petId)
             ->first();
-        return $pets;
+
+        if(!$pets){
+            return response()->json([
+                "msg" => "Perro no encontrado",
+            ], 404);
+        }
+        return response()->json([$pets], 200);
     }
 
     public function detallesDispositivo($deviceId){
@@ -29,7 +35,7 @@ class PetControllerProvicional extends Controller
         $devices = DB::table('pet_device')
             ->join('devices', 'devices.id', '=', 'pet_device.device_id')
             ->join('pets', 'pets.id', '=', 'pet_device.pet_id')
-            ->select('devices.modelo', 'devices.codigo', 'pets.nombre')
+            ->select('devices.id','devices.modelo', 'devices.codigo', 'pets.nombre')
             ->where('devices.id', $deviceId)
             ->first();
         return $devices;
@@ -50,7 +56,7 @@ class PetControllerProvicional extends Controller
     public function perrosxUsuario($userID){
         $pets = DB::table('pets')
             ->join('users', 'pets.user_id', '=', 'users.id')
-            ->select('pets.nombre', 'pets.raza', 'pets.genero')
+            ->select('pets.id','pets.nombre', 'pets.raza', 'pets.genero')
             ->where('users.id', $userID)
             ->get();
         return $pets;
