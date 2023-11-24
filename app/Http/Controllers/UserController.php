@@ -137,6 +137,8 @@ class UserController extends Controller
         // Obtener los dispositivos asociados al usuario
         $devices = $user->pets->flatMap(function ($pet) {
             return $pet->PetDevices->map->device;
+        })->map(function ($device){
+            return $device->only(['id', 'modelo', 'codigo']);
         });
 
         return response()->json($devices);
