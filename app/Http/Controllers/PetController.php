@@ -66,8 +66,8 @@ class PetController extends Controller
         $validate = Validator::make(
             $request->all(),
             [
-                "user"   => "required|exists:users,id",
-                "modelo" => "required|exists:devices,id",
+                "mascota"   => "required|exists:pets,id",
+                "modelo"    => "required|exists:devices,id",
             ]
         );
 
@@ -78,7 +78,7 @@ class PetController extends Controller
             ], 422);
         }
 
-        $pet = Pet::find($request->user);
+        $pet = Pet::find($request->mascota);
         $device = Device::find($request->modelo);
 
         if (!$device) {
@@ -104,5 +104,6 @@ class PetController extends Controller
             "msg" => "Dispositivo vinculado",
         ], 201);
     }
+
 
 }
