@@ -47,8 +47,8 @@ Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo
 Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
 
-Route::any('/test', function (){
+Route::any('/errormsg', function (){
     return response()->json([
         "msg" => "No estas logeado"
     ], 405);
-})->name('test');
+})->name('errormsg');
