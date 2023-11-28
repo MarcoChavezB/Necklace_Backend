@@ -12,7 +12,7 @@ class UserController extends Controller
 {
 
     public function __construct(){//Aqui se especifica que metodos necesitan autenticacion
-        $this->middleware('auth:api', ['except' => ['register', 'login', 'InfoUsuario', 'getUserDevices']]); //Aqui se especifica que metodos no necesitan autenticacion
+        $this->middleware('auth:api', ['except' => ['register', 'login', 'getUserDevices']]); //Aqui se especifica que metodos no necesitan autenticacion
     }
 
     public function login(){
@@ -134,7 +134,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        // Obtener los dispositivos asociados al usuario
+
         $devices = $user->pets->flatMap(function ($pet) {
             return $pet->PetDevices->map->device;
         })->map(function ($device){
