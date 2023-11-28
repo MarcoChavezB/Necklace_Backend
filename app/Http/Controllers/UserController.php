@@ -11,18 +11,24 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-    public function __construct(){//Aqui se especifica que metodos necesitan autenticacion
-        $this->middleware('auth:api', ['except' => ['register', 'login', 'getUserDevices']]); //Aqui se especifica que metodos no necesitan autenticacion
+    public function __construct(){
+        $this->middleware('auth:api', ['except' => ['register', 'login', 'getUserDevices']]);
     }
 
     public function login(){
-        $credentials = request(['email', 'password']);//Aqui se obtienen las credenciales del usuario
+        $credentials = request(['email', 'password']);
 
         $validate = Validator::make(
             $credentials,
             [
                 "email"      =>"required|email",
                 "password" =>"required|min:8"
+            ],
+            [
+                "email.required" => "El email es requerido",
+                "email.email" => "El email debe ser válido",
+                "password.required" => "La contraseña es requerida",
+                "password.min" => "La contraseña debe tener al menos 8 caracteres"
             ]
         );
 
@@ -33,12 +39,12 @@ class UserController extends Controller
             ],422);
         }
 
-        if(! $token = auth()->attempt($credentials)){//Aqui se verifica si las credenciales son correctas
+        if(! $token = auth()->attempt($credentials)){
             return response()->json([
                 'msg' => 'No autorizado'
             ], 401);
         }
-        return $this->respondWithToken($token, $credentials['email']);//Aqui se genera el token
+        return $this->respondWithToken($token, $credentials['email']);
     }
 
     protected  function respondWithToken($token, $email){//Aqui se genera el token
@@ -47,7 +53,6 @@ class UserController extends Controller
             'access_token' => $token,//Aqui se especifica el token
             'token_type' => 'bearer',//Aqui se especifica el tipo de token
             'isActive' => $isActive,
-            //Que el token dure 5 segundos?
             'expires_in' => auth()->factory()->getTTL() * 60,//Aqui se especifica el tiempo de expiracion del token
         ]);
     }
@@ -68,7 +73,7 @@ class UserController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Se ha cerrado sesión correctamente']);
     }
 
     public function register(Request $request){
@@ -79,6 +84,18 @@ class UserController extends Controller
                 "apellido"  =>"required|max:100|min:4",
                 "email"      =>"required|email",
                 "password" =>"required|min:8"
+            ],
+            [
+                "nombre.required" => "El nombre es requerido",
+                "nombre.max" => "El nombre debe tener máximo 100 caracteres",
+                "nombre.min" => "El nombre debe tener mínimo 4 caracteres",
+                "apellido.required" => "El apellido es requerido",
+                "apellido.max" => "El apellido debe tener máximo 100 caracteres",
+                "apellido.min" => "El apellido debe tener mínimo 4 caracteres",
+                "email.required" => "El email es requerido",
+                "email.email" => "El email debe ser válido",
+                "password.required" => "La contraseña es requerida",
+                "password.min" => "La contraseña debe tener al menos 8 caracteres"
             ]
         );
 
@@ -134,7 +151,6 @@ class UserController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-
         $devices = $user->pets->flatMap(function ($pet) {
             return $pet->PetDevices->map->device;
         })->map(function ($device){
@@ -143,6 +159,8 @@ class UserController extends Controller
 
         return response()->json($devices);
     }
+
+
 
 
 
