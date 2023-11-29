@@ -17,38 +17,25 @@ use App\Http\Controllers\DevicesController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-
-
-
-
-
-
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login'])->name('login');
-
-
-//DevicesController
-Route::get('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
-Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispositivos vinculados');
-
-
-// Vinculacion de mascota con dispositivo
-Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
-Route::post('/unlink-device/{id}', [PetController::class, 'UnlinkPetToDisp'])->name('unlink-device');
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
-Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
-Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
-Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
-Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
 
 Route::any('/errormsg', function (){
     return response()->json([
         "msg" => "No estas logeado"
-    ], 405);
+    ], 401);
 })->name('errormsg');
+
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
+Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
+    Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
+    Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
+    Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
+    Route::post('/unlink-device/{id}', [PetController::class, 'UnlinkPetToDisp'])->name('unlink-device');
+    Route::get('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
+    Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispositivos vinculados');
+});

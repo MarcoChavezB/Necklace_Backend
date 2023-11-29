@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pet_Device;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Device;
 use App\Models\Pet;
@@ -34,16 +35,23 @@ class DevicesController extends Controller
     }
 
     public function getCountDispo($id){
-        $pet=Pet::where('user_id', $id)->first();
-        if (!$pet) {
+
+        $userexists = User::where('id', $id)->first();
+        if (!$userexists) {
             return response()->json([
                 "msg" => "Usuario no encontrado",
             ], 404);
         }
-        $count = Pet_Device::where('pet_id', $id)->count();
+
+        $Ndispositivos = DB::table('pets')
+            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
+            ->where('pets.user_id', $id)
+            ->count();
+
         return response()->json([
-            "count" => $count
+            "count" => $Ndispositivos,
         ], 200);
+
     }
 
 
