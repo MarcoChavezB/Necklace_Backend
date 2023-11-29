@@ -45,7 +45,7 @@ Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
 Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
 Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
-Route::get('/user/{id}', [UserController::class, 'getUserDevices'])->middleware('auth:api');
+Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
 
 Route::any('/errormsg', function (){
     return response()->json([
