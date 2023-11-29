@@ -35,7 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
     Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
     Route::post('/unlink-device/{id}', [PetController::class, 'UnlinkPetToDisp'])->name('unlink-device');
-    Route::get('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
+    Route::post('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
     Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispositivos vinculados');
     Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
 });
