@@ -30,7 +30,7 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
 
-//Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
     Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
     Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
@@ -38,6 +38,6 @@ Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
     Route::post('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
     Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispositivos vinculados');
     Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
-//});
+});
 
 
