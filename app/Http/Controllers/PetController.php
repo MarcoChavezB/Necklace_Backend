@@ -64,6 +64,23 @@ class PetController extends Controller
         return $devices;
     }
 
+    public function getInfoPerroXIdCollar($dispId){
+        $pets = DB::table('pets')
+            ->join('pet_device', 'pets.id', '=', 'pet_device.pet_id')
+            ->join('devices', 'pet_device.device_id', '=', 'devices.id')
+            ->select('pets.id','pets.nombre', 'pets.raza', 'pets.genero')
+            ->where('devices.id', $dispId)
+            ->first();
+
+        if(!$pets){
+            return response()->json([
+                "msg" => "Mascota no encontrada",
+            ], 404);
+        }
+        return $pets;
+
+    }
+
     public function perrosxUsuario($userID){
         $pets = DB::table('pets')
             ->join('users', 'pets.user_id', '=', 'users.id')
