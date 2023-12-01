@@ -53,7 +53,7 @@ class UserController extends Controller
             'access_token' => $token,//Aqui se especifica el token
             'token_type' => 'bearer',//Aqui se especifica el tipo de token
             'isActive' => $isActive,
-            'expires_in' => auth()->factory()->getTTL() * 60,//Aqui se especifica el tiempo de expiracion del token
+            'expires_in' => auth()->factory()->getTTL() * 1,//Aqui se especifica el tiempo de expiracion del token
         ]);
     }
 
