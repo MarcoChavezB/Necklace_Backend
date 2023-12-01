@@ -47,6 +47,22 @@ class PetController extends Controller
 
     }
 
+    public function PrimerDispxUser($user){
+
+        $devices = DB::table('pet_device')
+            ->join('devices', 'devices.id', '=', 'pet_device.device_id')
+            ->join('pets', 'pets.id', '=', 'pet_device.pet_id')
+            ->select('devices.id')
+            ->where('pets.user_id', $user->id)
+            ->first();
+        if(!$devices){
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+        }
+        return $devices;
+    }
+
     public function perrosxUsuario($userID){
         $pets = DB::table('pets')
             ->join('users', 'pets.user_id', '=', 'users.id')
