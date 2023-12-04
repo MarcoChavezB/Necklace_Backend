@@ -165,4 +165,40 @@ class PetController extends Controller
         return $pet;
     }
 
+    public function registerPet(Request $request){
+        $validate = Validator::make(
+            $request->all(),
+            [
+                "nombre"   => "required",
+                "raza"    => "required",
+                "genero"    => "required",
+                "user_id"    => "required",
+            ],
+            [
+                "nombre.required" => "El nombre es requerido",
+                "raza.required" => "La raza es requerida",
+                "genero.required" => "El genero es requerido",
+                "user_id.required" => "El id del usuario es requerido",
+            ]
+        );
+
+        if ($validate->fails()) {
+            return response()->json([
+                "msg"   => "Error al validar los datos",
+                "error" => $validate->errors()
+            ], 422);
+        }
+
+        $pet = new Pet();
+        $pet->nombre = $request->nombre;
+        $pet->raza = $request->raza;
+        $pet->genero = $request->genero;
+        $pet->user_id = $request->user_id;
+        $pet->save();
+
+        return response()->json([
+            "msg"=>"Mascota registrada",
+        ],201);
+    }
+
 }

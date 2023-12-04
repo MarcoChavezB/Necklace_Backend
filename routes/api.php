@@ -40,7 +40,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
     Route::get('/firstDisp/{id}', [PetController::class, 'PrimerDispxUser']);
     Route::get('/getInfoPerro/{id}', [PetController::class, 'getInfoPerroXIdCollar']);
-
+    Route::post('/registerPet', [PetController::class, 'registerPet']);
 });
 
 
