@@ -34,8 +34,11 @@
 <body>
 <div class="container">
     <img src="{{ asset('svg/logotipo.svg') }}" alt="Logotipo">
-    <h1>¡Registro Exitoso!</h1>
-    <p>Tu cuenta ha sido activada con éxito.</p>
+    <h1>¡Verificacion Exitosa!</h1>
+    <p>Tu email ha sido verificado con éxito.</p>
+    <br>
+    <p>Gracias por utilizar nuestros servicios.</p>
+    <p>Ya puedes logearte en la app</p>
 </div>
 </body>
 </html>
