@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountActivation;
 class UserController extends Controller
 {
 
@@ -113,6 +115,8 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
+
+        Mail::to($user->email)->send(new AccountActivation($user));
 
         return response()->json([
             "msg"=>"Usuario registrado",

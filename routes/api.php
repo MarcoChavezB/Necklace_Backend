@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DevicesController;
+use App\Http\Controllers\ActivationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,13 @@ Route::any('/errormsg', function (){
     ], 401);
 })->name('errormsg');
 
+Route::any('/activationMsg', function (){
+    return response()->json([
+        "msg" => "Cuenta activada con exito"
+    ], 200);
+})->name('activationMsg');
+
+
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
@@ -42,5 +50,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getInfoPerro/{id}', [PetController::class, 'getInfoPerroXIdCollar']);
     Route::post('/registerPet', [PetController::class, 'registerPet']);
 });
+
+Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
 
 
