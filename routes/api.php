@@ -25,10 +25,9 @@ Route::any('/errormsg', function (){
     ], 401);
 })->name('errormsg');
 
+
 Route::any('/activationMsg', function (){
-    return response()->json([
-        "msg" => "Cuenta activada con exito"
-    ], 200);
+    return view('emails.succes');
 })->name('activationMsg');
 
 

@@ -18,6 +18,6 @@ class ActivationController extends Controller
       $user->esta_activo = true;
       $user->save();
 
-      return redirect('/api/activationMsg');
+        return redirect()->route('activationMsg');
     }
 }
