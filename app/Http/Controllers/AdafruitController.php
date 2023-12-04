@@ -22,7 +22,9 @@ class AdafruitController extends Controller
         $value = $data[0]['value'];
         $date = $data[0]['created_at'];
 
-        return $value;
+        return response()->json([
+            'value' => $value
+        ]);
     }
 
 }
