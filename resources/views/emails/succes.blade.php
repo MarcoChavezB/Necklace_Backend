@@ -26,7 +26,7 @@
             color: #333;
         }
         img {
-            width: 100px;
+            width: 200px; /* Aumenta este valor para hacer la imagen más grande */
             height: auto;
         }
     </style>
@@ -34,11 +34,8 @@
 <body>
 <div class="container">
     <img src="{{ asset('svg/logotipo.svg') }}" alt="Logotipo">
-    <h1>¡Verificacion Exitosa!</h1>
-    <p>Tu email ha sido verificado con éxito.</p>
-    <br>
-    <p>Gracias por utilizar nuestros servicios.</p>
-    <p>Ya puedes logearte en la app</p>
+    <h1>¡Registro Exitoso!</h1>
+    <p>Tu cuenta ha sido activada con éxito.</p>
 </div>
 </body>
 </html>
