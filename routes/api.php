@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\ActivationController;
+use App\Http\Controllers\AdafruitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/firstDisp/{id}', [PetController::class, 'PrimerDispxUser']);
     Route::get('/getInfoPerro/{id}', [PetController::class, 'getInfoPerroXIdCollar']);
     Route::post('/registerPet', [PetController::class, 'registerPet']);
+    Route::get('/getHumData', [AdafruitController::class, 'getHumData']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
