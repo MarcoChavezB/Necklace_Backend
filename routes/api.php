@@ -54,6 +54,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getHumData', [HumController::class, 'getHumData']);
     Route::get('/getAirQuality', [AirController::class, 'getAirQuality']);
     Route::get('/getCaloriesBurned', [CalorieController::class, 'getCaloriesBurned']);
+    Route::get('/getDogData', [PetController::class, 'getDogData']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
