@@ -298,7 +298,12 @@ class PetController extends Controller
 
     private function calculateRestTime($activityData)
     {
-        return (1 - $activityData) * 24;
+        if ($activityData > 0.5) {
+            return 'Movimiento';
+        } else {
+            return 'Reposo';
+        }
+
     }
 
     private function calculateHappinessLevel($activityData)
