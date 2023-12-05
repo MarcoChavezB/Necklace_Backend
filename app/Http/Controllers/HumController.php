@@ -85,7 +85,7 @@ class HumController extends Controller
         $PetDeviceId = DB::table('pet_device')
             ->join('devices', 'pet_device.device_id', '=', 'devices.id')
             ->select('pet_device.id')
-            ->where( 'devices.deviceCode',  $deviceCode)
+            ->where( 'devices.codigo',  $deviceCode)
             ->first();
 
         if(!$PetDeviceId){

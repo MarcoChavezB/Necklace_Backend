@@ -99,10 +99,10 @@ class CalorieController extends Controller
 
     public function getPetDeviceId($deviceCode){
         $PetDeviceId = DB::table('pet_device')
-            ->join('devices', 'pet_device.device_id', '=', 'devices.id')
-            ->select('pet_device.id')
-            ->where( 'devices.deviceCode',  $deviceCode)
-            ->first();
+        ->join('devices', 'pet_device.device_id', '=', 'devices.id')
+        ->select('pet_device.id')
+        ->where( 'devices.codigo',  $deviceCode)
+        ->first();
 
         if(!$PetDeviceId){
             return response()->json([
