@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\DeviceAir;
+use App\Models\DeviceMov;
 use App\Models\Pet;
 use App\Models\Pet_Device;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -199,6 +202,98 @@ class PetController extends Controller
         return response()->json([
             "msg"=>"Mascota registrada",
         ],201);
+    }
+
+    public function getDogData(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'deviceCode' => 'required',
+        ],
+            [
+                'deviceCode.required' => 'El código del dispositivo es requerido',
+            ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "msg"   => "Error al validar los datos",
+                "error" => $validate->errors()
+            ], 422);
+        }
+
+
+        $activityData = $this->getActivityData($request->input('deviceCode')); // Datos de actividad del sensor
+
+        if (!$activityData) {
+            return response()->json([
+                "msg" => "No se pudo obtener los datos de actividad",
+            ], 500);
+        }
+
+        $restTime = $this->calculateRestTime($activityData); // Calcular el tiempo de reposo
+        $happinessLevel = $this->calculateHappinessLevel($activityData); // Calcular el nivel de felicidad
+
+        return response()->json([
+            'restTime' => $restTime,
+            'happinessLevel' => $happinessLevel
+        ]);
+    }
+
+    private function getActivityData($deviceCode)
+    {
+        $client = new Client();
+        $PetDeviceId = $this->getPetDeviceId($deviceCode);
+        if(!$PetDeviceId){
+            return response()->json([
+                "msg" => "Registro no encontrado",
+            ], 404);
+        }
+        try {
+            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/vel-value/data/last',[
+                'headers' => [
+                    'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        $data = json_decode($response->getBody(), true);
+
+        $value = $data['value'];
+        $date = $data['created_at'];
+        $feedId = $data['feed_id'];
+        $this->saveMovData($value, $date, $feedId, $PetDeviceId->id);
+
+
+
+        return $data['value'];
+    }
+
+    public function saveMovData($value, $date, $feedId, $PetDeviceId){
+        $deviceHum = new DeviceMov();
+        $deviceHum->pet_device_id = $PetDeviceId;
+        $deviceHum->value = $value;
+        $deviceHum->created_at = $date;
+        $deviceHum->feed_id = $feedId;
+        $deviceHum->save();
+    }
+
+
+
+    private function calculateRestTime($activityData)
+    {
+        return (1 - $activityData) * 24;
+    }
+
+    private function calculateHappinessLevel($activityData)
+    {
+        if ($activityData > 0.7) {
+            return 3; // Feliz
+        } elseif ($activityData > 0.4) {
+            return 2; // Medio
+        } else {
+            return 1; // Triste
+        }
     }
 
 }
