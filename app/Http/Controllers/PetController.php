@@ -280,9 +280,9 @@ class PetController extends Controller
 
     public function getPetDeviceId($deviceCode){
         $PetDeviceId = DB::table('pet_device')
-            ->join('device', 'pet_device.device_id', '=', 'device.id')
+            ->join('devices', 'pet_device.device_id', '=', 'devices.id')
             ->select('pet_device.id')
-            ->where( 'device.deviceCode',  $deviceCode)
+            ->where( 'devices.deviceCode',  $deviceCode)
             ->first();
 
         if(!$PetDeviceId){
