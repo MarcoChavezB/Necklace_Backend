@@ -9,6 +9,7 @@ class DeviceHum extends Model
 {
     use HasFactory;
 
+    protected $table = 'device_hum';
     protected $fillable = [
         'pet_device_id',
         'value',

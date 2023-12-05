@@ -9,6 +9,8 @@ class DeviceTemp extends Model
 {
     use HasFactory;
 
+    protected $table = 'device_temp';
+
     protected $fillable = [
         'pet_device_id',
         'value',

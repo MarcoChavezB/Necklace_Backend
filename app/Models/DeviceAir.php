@@ -9,6 +9,8 @@ class DeviceAir extends Model
 {
     use HasFactory;
 
+    protected $table = 'device_air';
+
     protected $fillable = [
         'pet_device_id',
         'value',
