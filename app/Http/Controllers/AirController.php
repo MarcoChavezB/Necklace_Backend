@@ -99,10 +99,10 @@ class AirController extends Controller
     }
 
     public function getPetDeviceId($deviceCode){
-        $PetDeviceId = DB::table('Pet_Device')
-            ->join('Device', 'Pet_Device.device_id', '=', 'Device.id')
-            ->select('Pet_Device.id')
-            ->where( 'Device.deviceCode',  $deviceCode)
+        $PetDeviceId = DB::table('pet_device')
+            ->join('device', 'pet_device.device_id', '=', 'device.id')
+            ->select('pet_device.id')
+            ->where( 'device.deviceCode',  $deviceCode)
             ->first();
 
         if(!$PetDeviceId){

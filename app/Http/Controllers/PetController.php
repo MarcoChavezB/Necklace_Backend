@@ -278,6 +278,22 @@ class PetController extends Controller
         $deviceHum->save();
     }
 
+    public function getPetDeviceId($deviceCode){
+        $PetDeviceId = DB::table('pet_device')
+            ->join('device', 'pet_device.device_id', '=', 'device.id')
+            ->select('pet_device.id')
+            ->where( 'device.deviceCode',  $deviceCode)
+            ->first();
+
+        if(!$PetDeviceId){
+            return response()->json([
+                "msg" => "Registro no encontrado",
+            ], 404);
+        }
+        return $PetDeviceId;
+
+    }
+
 
 
     private function calculateRestTime($activityData)
