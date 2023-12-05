@@ -10,6 +10,8 @@ class DeviceHum extends Model
     use HasFactory;
 
     protected $table = 'device_hum';
+    public $timestamps = false;
+
     protected $fillable = [
         'pet_device_id',
         'value',

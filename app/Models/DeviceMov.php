@@ -10,6 +10,8 @@ class DeviceMov extends Model
     use HasFactory;
 
     protected $table = 'device_mov';
+    public $timestamps = false;
+
 
     protected $fillable = [
         'pet_device_id',

@@ -10,6 +10,8 @@ class DeviceAir extends Model
     use HasFactory;
 
     protected $table = 'device_air';
+    public $timestamps = false;
+
 
     protected $fillable = [
         'pet_device_id',

@@ -10,6 +10,8 @@ class DeviceTemp extends Model
     use HasFactory;
 
     protected $table = 'device_temp';
+    public $timestamps = false;
+
 
     protected $fillable = [
         'pet_device_id',
