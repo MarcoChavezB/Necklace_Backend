@@ -36,7 +36,7 @@ class TempController extends Controller
         }
 
         try {
-            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/hum-value/data/last',[
+            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/temp-value/data/last',[
                 'headers' => [
                     'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
                 ]
