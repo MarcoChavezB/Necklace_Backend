@@ -62,9 +62,36 @@ class TempController extends Controller
 
         $this->saveTempData($value, $date, $feedId, $PetDeviceId->id);
 
-        return response()->json([
-            'value' => $value
-        ]);
+        if($value < 0){
+            return response()->json([
+                "nivel" => 1, //Muy frio
+                "value" => $value
+            ], 200);
+        }elseif (0 <= $value && $value < 10){
+            return response()->json([
+                "nivel" => 2, //Frio
+                "value" => $value
+            ], 200);
+        }
+        elseif (10 <= $value && $value < 20){
+            return response()->json([
+                "nivel" => 3, //Templado
+                "value" => $value
+            ], 200);
+        }
+        elseif (20 <= $value && $value < 30){
+            return response()->json([
+                "nivel" => 4, //Caliente
+                "value" => $value
+            ], 200);
+        }
+        elseif ($value >= 30){
+            return response()->json([
+                "nivel" => 5, //Muy caliente
+                "value" => $value
+            ], 200);
+        }
+
     }
 
 
