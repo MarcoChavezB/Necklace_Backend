@@ -89,9 +89,7 @@ class HumController extends Controller
             ->first();
 
         if(!$PetDeviceId){
-            return response()->json([
-                "msg" => "Registro no encontrado",
-            ], 404);
+            return null;
         }
         return $PetDeviceId;
 
