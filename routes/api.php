@@ -3,6 +3,7 @@
 use App\Http\Controllers\AirController;
 use App\Http\Controllers\CalorieController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\TempController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -47,7 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/unlink-device/{id}', [PetController::class, 'UnlinkPetToDisp'])->name('unlink-device');
     Route::post('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
     Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispositivos vinculados');
-    Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
+    Route::get('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
     Route::get('/firstDisp/{id}', [PetController::class, 'PrimerDispxUser']);
     Route::get('/getInfoPerro/{id}', [PetController::class, 'getInfoPerroXIdCollar']);
     Route::post('/registerPet', [PetController::class, 'registerPet']);
@@ -55,6 +56,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getAirQuality', [AirController::class, 'getAirQuality']);
     Route::get('/getCaloriesBurned', [CalorieController::class, 'getCaloriesBurned']);
     Route::get('/getDogData', [PetController::class, 'getDogData']);
+    Route::get('/getTempData', [TempController::class, 'getTempData']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
