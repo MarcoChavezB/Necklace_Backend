@@ -363,7 +363,7 @@ class PetController extends Controller
 
         $pet_device = new Pet_Device();
         $pet_device->pet_id = $PetID;
-        $pet_device->device_id = $deviceID;
+        $pet_device->device_id = $deviceID->id;
         $pet_device->save();
 
         return response()->json([
