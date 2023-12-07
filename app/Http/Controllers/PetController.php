@@ -316,4 +316,59 @@ class PetController extends Controller
         }
     }
 
+    public function registerPetYDev(Request $request){
+        $validate = Validator::make(
+            $request->all(),
+            [
+                "nombre"   => "required",
+                "raza"    => "required",
+                "genero"    => "required",
+                "codigo"    => "required",
+                "user_id"    => "required",
+            ],
+            [
+                "nombre.required" => "El nombre es requerido",
+                "raza.required" => "La raza es requerida",
+                "genero.required" => "El genero es requerido",
+                "user_id.required" => "El id del usuario es requerido",
+                "codigo.required" => "El codigo es requerido",
+            ]
+        );
+
+        if ($validate->fails()) {
+            return response()->json([
+                "msg"   => "Error al validar los datos",
+                "error" => $validate->errors()
+            ], 422);
+        }
+
+        $pet = new Pet();
+        $pet->nombre = $request->nombre;
+        $pet->raza = $request->raza;
+        $pet->genero = $request->genero;
+        $pet->user_id = $request->user_id;
+        $pet->save();
+
+        $PetID = $pet->id;
+        $deviceID = DB::table('devices')
+            ->select('devices.id')
+            ->where('devices.codigo', $request->input('codigo'))
+            ->first();
+
+        if( !$deviceID ){
+            return response()->json([
+                "msg" => "Codigo no encontrado",
+            ], 404);
+        }
+
+        $pet_device = new Pet_Device();
+        $pet_device->pet_id = $PetID;
+        $pet_device->device_id = $deviceID;
+        $pet_device->save();
+
+        return response()->json([
+            "msg"=>"Mascota registrada",
+        ],201);
+    }
+
 }
