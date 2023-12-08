@@ -168,10 +168,9 @@ class TempController extends Controller
             $fecha = new DateTime($record->created_at);
             $hora = $fecha->format('H:i:s');
 
-            return [
-                'value' => $record->value,
+            return response()->json([ 'value' => $record->value,
                 'created_at' => $hora,
-            ];
+            ]);
         });
     }
 }
