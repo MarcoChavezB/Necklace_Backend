@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro Exitoso</title>
+    <title>Error</title>
     <style>
         body {
             display: flex;
@@ -20,7 +20,7 @@
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #4CAF50;
+            color: #ff0000;
         }
         p {
             color: #333;
@@ -34,8 +34,8 @@
 <body>
 <div class="container">
     <img src="{{ asset('svg/logotipo.svg') }}" alt="Logotipo">
-    <h1>¡Registro Exitoso!</h1>
-    <p>Tu cuenta ha sido activada con éxito.</p>
+    <h1>¡Error!</h1>
+    <p>Tu cuenta ya fue activada o este enlace de activacion ha expirado.</p>
 </div>
 </body>
 </html>

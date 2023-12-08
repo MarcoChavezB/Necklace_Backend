@@ -11,17 +11,13 @@ class ActivationController extends Controller
     public function activate(Request $request, User $user)
     {
         if (!$request->hasValidSignature()) {
-            return response()->json([
-                "msg" => "Enlace de activacion invalido o expirado"
-            ], 401);
+            return view('emails.error');
         }
 
         $token = DB::table('tokens')->where('token', hash('sha256', $request->token))->first();
 
         if (!$token) {
-            return response()->json([
-                "msg" => "Enlace de activacion invalido o expirado"
-            ], 401);
+            return view('emails.error');
         }
 
         DB::table('tokens')->where('token', hash('sha256', $request->token))->delete();  // invalida el token

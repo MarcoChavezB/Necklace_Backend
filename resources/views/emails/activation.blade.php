@@ -28,7 +28,7 @@
         }
         a {
             display: inline-block;
-            color: #fff;
+            color: #000000;
             background-color: #446dff;
             padding: 10px 20px;
             margin: 20px 0;
@@ -42,7 +42,6 @@
     <h2>Bienvenido a Necklace!</h2>
     <p>Hola {{$user['nombre']}},</p>
     <p>Por favor haz clic en el enlace de abajo para verificar tu correo electrónico y activar tu cuenta.</p>
-    <p>Este enlace tiene una expiración de 5 días, verifica antes de que expire.</p>
     <a href="{{$url}}">Verificar Correo Electrónico</a>
 </div>
 </body>
