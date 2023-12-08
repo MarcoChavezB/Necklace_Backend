@@ -121,7 +121,7 @@ class TempController extends Controller
 
 
     public function getTempPerHour(Request $request){
-        $deviceCode = $request->input('deviceCode')->id;
+        $deviceCode = $request->input('deviceCode');
 
         $devID = $this->getPetDeviceId($deviceCode);
         if(!$devID){
