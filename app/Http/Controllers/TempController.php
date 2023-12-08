@@ -164,12 +164,14 @@ class TempController extends Controller
             ->orderBy('created_at')
             ->get(['value', 'created_at']);
 
-        $fecha = new DateTime($records->created_at);
-        $hora = $fecha->format('H:i:s');
+        $result = $records->map(function ($record) {
+            $fecha = new DateTime($record->created_at);
+            $hora = $fecha->format('H:i:s');
 
-        return response()->json([
-            "value" => $records->value,
-            "created_at" => $hora,
-        ]);
+            return [
+                'value' => $record->value,
+                'created_at' => $hora,
+            ];
+        });
     }
 }
