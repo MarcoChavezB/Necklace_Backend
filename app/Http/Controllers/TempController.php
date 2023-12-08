@@ -128,7 +128,7 @@ class TempController extends Controller
         if(!$devID){
             return null;
         }
-        return $devID;
+        return $devID->id;
     }
 
 
