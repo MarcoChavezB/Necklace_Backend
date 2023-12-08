@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AirController;
 use App\Http\Controllers\CalorieController;
+use App\Http\Controllers\ClimaController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\TempController;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getDogData', [PetController::class, 'getDogData']);
     Route::get('/getTempData', [TempController::class, 'getTempData']);
     Route::post('/registerPetYDev', [PetController::class, 'registerPetYDev']);
+    Route::get('/getForecast', [ClimaController::class, 'getForecast']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');

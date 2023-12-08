@@ -9,7 +9,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class AccountActivation extends Mailable
 {
@@ -62,8 +64,15 @@ class AccountActivation extends Mailable
 
     public function build()
     {
-        $url  = URL::temporarySignedRoute(
-            'activation', now()->addDays(5), ['user' => $this->user->id]);
+        $token = Str::random(32);
+
+        DB::table('tokens')->insert([  //Se inserta el token en la tabla tokens
+            'token' => hash('sha256', $token),
+            'created_at' => now(),
+        ]);
+
+
+        $url  = URL::temporarySignedRoute('activation', now()->addDays(5), ['user' => $this->user->id]);
 
         return $this->view('emails.activation', ['url' => $url])
             ->with([
