@@ -60,6 +60,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getTempData', [TempController::class, 'getTempData']);
     Route::post('/registerPetYDev', [PetController::class, 'registerPetYDev']);
     Route::get('/getForecast', [ClimaController::class, 'getForecast']);
+    Route::get('/getTempPerHour', [TempController::class, 'getTempPerHour']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');

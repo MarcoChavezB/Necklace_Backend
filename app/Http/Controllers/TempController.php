@@ -131,10 +131,12 @@ class TempController extends Controller
         }
         $pet_device_id = DB::table('pet_device')->where('device_id', $devID)->value('id');
 
+        $testDate = '2023-12-04';
+
         $values = DB::table('device_temp')
             ->select(DB::raw('MIN(id) as id'))
             ->where('pet_device_id', $pet_device_id)
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', $testDate)
             ->groupBy(DB::raw('HOUR(created_at)'))
             ->pluck('id');
 
