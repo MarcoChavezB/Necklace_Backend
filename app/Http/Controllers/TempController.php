@@ -163,6 +163,6 @@ class TempController extends Controller
             ->orderBy('created_at')
             ->get(['value', 'created_at']);
 
-        return response()->json(['values' => $records]);
+        return response()->json(['values' => $records->first()]);
     }
 }
