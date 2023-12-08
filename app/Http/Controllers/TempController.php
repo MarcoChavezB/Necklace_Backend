@@ -131,6 +131,12 @@ class TempController extends Controller
         }
         $pet_device_id = DB::table('pet_device')->where('device_id', $devID)->value('id');
 
+        if (!$pet_device_id) {
+            return response()->json([
+                "msg" => "Registro no encontrado",
+            ], 404);
+        }
+
         $testDate = '2023-12-04';
 
         $values = DB::table('device_temp')
