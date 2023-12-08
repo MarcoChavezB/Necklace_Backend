@@ -161,7 +161,7 @@ class TempController extends Controller
         $records = DB::table('device_temp')
             ->whereIn('id', $values)
             ->orderBy('created_at')
-            ->get();
+            ->get(['value', 'created_at']);
 
         return response()->json(['values' => $records]);
     }
