@@ -61,22 +61,21 @@ class AccountActivation extends Mailable
     {
         return [];
     }
-
     public function build()
     {
-        $token = Str::random(32);
+        $token = Str::random(32);  // genera un token único
 
-        DB::table('tokens')->insert([  //Se inserta el token en la tabla tokens
+        DB::table('tokens')->insert([  // guarda el token en la base de datos
             'token' => hash('sha256', $token),
             'created_at' => now(),
         ]);
 
-
-        $url  = URL::temporarySignedRoute('activation', now()->addDays(5), ['user' => $this->user->id]);
+        $url = URL::signedRoute('activation', ['user' => $this->user->id, 'token' => $token]);  // crea una ruta firmada con el token
 
         return $this->view('emails.activation', ['url' => $url])
             ->with([
                 'url' => $url,
             ]);
     }
+
 }
