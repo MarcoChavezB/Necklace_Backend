@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+Use \DateTime;
 
 class TempController extends Controller
 {
@@ -163,6 +164,12 @@ class TempController extends Controller
             ->orderBy('created_at')
             ->get(['value', 'created_at']);
 
-        return response()->json($records);
+        $fecha = new DateTime($records->created_at);
+        $hora = $fecha->format('H:i:s');
+
+        return response()->json([
+            "value" => $records->value,
+            "created_at" => $hora,
+        ]);
     }
 }
