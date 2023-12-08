@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class TempController extends Controller
 {
@@ -116,5 +117,32 @@ class TempController extends Controller
             return null;
         }
         return $PetDeviceId;
+    }
+
+
+    public function getTempPerHour(Request $request){
+        $deviceCode = $request->input('deviceCode');
+
+        $devID = $this->getPetDeviceId($deviceCode);
+        if(!$devID){
+            return response()->json([
+                "msg" => "Registro no encontrado",
+            ], 404);
+        }
+        $pet_device_id = DB::table('pet_device')->where('device_id', $devID)->value('id');
+
+        $values = DB::table('device_temp')
+            ->select(DB::raw('MIN(id) as id'))
+            ->where('pet_device_id', $pet_device_id)
+            ->whereDate('created_at', Carbon::today())
+            ->groupBy(DB::raw('HOUR(created_at)'))
+            ->pluck('id');
+
+        $records = DB::table('device_temp')
+            ->whereIn('id', $values)
+            ->orderBy('created_at')
+            ->get();
+
+        return response()->json(['values' => $records]);
     }
 }
