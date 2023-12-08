@@ -119,11 +119,23 @@ class TempController extends Controller
         return $PetDeviceId;
     }
 
+    public function getDevId($deviceCode){
+        $devID = DB::table('devices')
+            ->select('devices.id')
+            ->where( 'devices.codigo',  $deviceCode)
+            ->first();
+
+        if(!$devID){
+            return null;
+        }
+        return $devID;
+    }
+
 
     public function getTempPerHour(Request $request){
         $deviceCode = $request->input('deviceCode');
 
-        $devID = $this->getPetDeviceId($deviceCode);
+        $devID = $this->getDevId($deviceCode);
         if(!$devID){
             return response()->json([
                 "msg" => "Registro no encontrado",
