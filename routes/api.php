@@ -65,4 +65,11 @@ Route::middleware('auth:api')->group(function () {
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
 
+Route::any('/getServerTime', function (){
+    return response()->json([
+        "msg" => date("Y-m-d H:i:s")
+    ], 200);
+})->name('getServerTime');
+
+
 
