@@ -164,13 +164,16 @@ class TempController extends Controller
             ->orderBy('created_at')
             ->get()
             ->map(function ($record) {
-                $record->created_at = Carbon::parse($record->created_at)->format('H:i:s');
-                return $record;
-            });
+                return [
+                    'value' => $record->value,
+                    'created_at' => Carbon::parse($record->created_at)->format('H:i:s')
+                ];
+            })
+            ->values()
+            ->all();
 
-        return response()->json([
-            "data" => $records
-        ], 200);
+        return response()->json($records, 200);
+
 
     }
 }
