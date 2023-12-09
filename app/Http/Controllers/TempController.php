@@ -162,10 +162,15 @@ class TempController extends Controller
         $records = DB::table('device_temp')
             ->whereIn('id', $values)
             ->orderBy('created_at')
-            ->get(['value', 'created_at']);
+            ->get()
+            ->map(function ($record) {
+                $record->created_at = Carbon::parse($record->created_at)->format('H:i:s');
+                return $record;
+            });
 
         return response()->json([
             "data" => $records
         ], 200);
+
     }
 }
