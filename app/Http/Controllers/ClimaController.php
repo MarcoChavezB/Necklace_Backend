@@ -11,7 +11,7 @@ class ClimaController extends Controller
         $client = new Client();
         $response = $client->request('GET', 'http://api.weatherapi.com/v1/forecast.json', [
             'query' => [
-                'key' => env('WEATHER_API_KEY'),
+                'key' => config('services.weatherapi.key'),
                 'q' => $request->input('coords'),
                 'days' => 1,
             ]
