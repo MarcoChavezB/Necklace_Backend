@@ -241,14 +241,20 @@ class PetController extends Controller
     private function getActivityData($deviceCode)
     {
         $client = new Client();
+        $feedName = "-vel-value";
+
         $PetDeviceId = $this->getPetDeviceId($deviceCode);
         if(!$PetDeviceId){
             return response()->json([
                 "msg" => "Registro no encontrado",
             ], 404);
         }
+
+        $devCode = $deviceCode;
+        $feedKey = $devCode.$feedName;
+
         try {
-            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/vel-value/data/last',[
+            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/'.$feedKey.'/data/last',[
                 'headers' => [
                     'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
                 ]

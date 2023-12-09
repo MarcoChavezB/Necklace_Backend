@@ -15,6 +15,7 @@ class TempController extends Controller
 {
     public function getTempData(Request $request){
         $client = new Client();
+        $feedName = "-temp-value";
 
         $validate = Validator::make($request->all(), [
             'deviceCode' => 'required',
@@ -37,8 +38,11 @@ class TempController extends Controller
             ], 404);
         }
 
+        $devCode = $request->deviceCode;
+        $feedKey = $devCode.$feedName;
+
         try {
-            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/temp-value/data/last',[
+            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/'.$feedKey.'/data/last',[
                 'headers' => [
                     'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
                 ]

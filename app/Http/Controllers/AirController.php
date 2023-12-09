@@ -12,6 +12,7 @@ class AirController extends Controller
 {
     public function getAirQuality(Request $request){
         $client = new Client();
+        $feedName = "-air-value";
 
         $validate = Validator::make($request->all(), [
             'deviceCode' => 'required',
@@ -34,8 +35,11 @@ class AirController extends Controller
             ], 404);
         }
 
+        $devCode = $request->deviceCode;
+        $feedKey = $devCode.$feedName;
+
         try {
-            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/air-value/data/last',[
+            $response = $client->request('GET','https://io.adafruit.com/api/v2/MarcoChavez/feeds/'.$feedKey.'/data/last',[
                 'headers' => [
                     'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
                 ]
