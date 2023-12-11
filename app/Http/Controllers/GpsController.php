@@ -13,7 +13,7 @@ class GpsController extends Controller
         $feedName = "-gps";
 
         $validate = Validator::validate($request->all(), [
-            'coords' => 'required',
+            'deviceCode' => 'required',
         ],
             [
                 'coords.required' => 'Las coordenadas son requeridas',
