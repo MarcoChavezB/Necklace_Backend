@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeviceAir;
 use App\Models\DeviceMov;
+use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -82,7 +83,11 @@ class CalorieController extends Controller
         $date = $data['created_at'];
         $feedId = $data['feed_id'];
 
-        $this->saveMovData($value, $date, $feedId, $PetDeviceId->id);
+        $fechaUTC = new DateTime($date, new \DateTimeZone('UTC'));
+        $fechaUTC -> setTimeZone(new \DateTimeZone('America/Monterrey'));
+        $fechaLocal = $fechaUTC->format('Y-m-d H:i:s');
+
+        $this->saveMovData($value, $fechaLocal, $feedId, $PetDeviceId->id);
 
 
         return $data['value'];

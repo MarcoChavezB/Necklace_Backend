@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DeviceAir;
+use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,11 @@ class AirController extends Controller
         $date = $data['created_at'];
         $feedId = $data['feed_id'];
 
-        $this->saveAirData($value, $date, $feedId, $PetDeviceId->id);
+        $fechaUTC = new DateTime($date, new \DateTimeZone('UTC'));
+        $fechaUTC -> setTimeZone(new \DateTimeZone('America/Monterrey'));
+        $fechaLocal = $fechaUTC->format('Y-m-d H:i:s');
+
+        $this->saveAirData($value, $fechaLocal, $feedId, $PetDeviceId->id);
 
         if($value >= 0 && $value <= 50){
             return response()->json([

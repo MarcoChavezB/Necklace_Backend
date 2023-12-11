@@ -14,6 +14,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+Use \DateTime;
 class PetController extends Controller
 {
     public function detallesPerro($petId)
@@ -268,7 +270,12 @@ class PetController extends Controller
         $value = $data['value'];
         $date = $data['created_at'];
         $feedId = $data['feed_id'];
-        $this->saveMovData($value, $date, $feedId, $PetDeviceId->id);
+
+        $fechaUTC = new DateTime($date, new \DateTimeZone('UTC'));
+        $fechaUTC -> setTimeZone(new \DateTimeZone('America/Monterrey'));
+        $fechaLocal = $fechaUTC->format('Y-m-d H:i:s');
+
+        $this->saveMovData($value, $fechaLocal, $feedId, $PetDeviceId->id);
 
 
 

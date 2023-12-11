@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet_Device;
+use DateTime;
 use http\Env;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -68,7 +69,11 @@ class HumController extends Controller
         $date = $data['created_at'];
         $feedId = $data['feed_id'];
 
-        $this->saveHumData($value, $date, $feedId, $PetDeviceId->id);
+        $fechaUTC = new DateTime($date, new \DateTimeZone('UTC'));
+        $fechaUTC -> setTimeZone(new \DateTimeZone('America/Monterrey'));
+        $fechaLocal = $fechaUTC->format('Y-m-d H:i:s');
+
+        $this->saveHumData($value, $fechaLocal, $feedId, $PetDeviceId->id);
 
         return response()->json([
             'value' => $value
