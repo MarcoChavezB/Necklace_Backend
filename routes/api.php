@@ -53,14 +53,14 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/firstDisp/{id}', [PetController::class, 'PrimerDispxUser']);
     Route::get('/getInfoPerro/{id}', [PetController::class, 'getInfoPerroXIdCollar']);
     Route::post('/registerPet', [PetController::class, 'registerPet']);
-    Route::get('/getHumData', [HumController::class, 'getHumData']);
+    Route::get('/getHumData', [HumController::class, 'getHumData']); //Pendiente hasta tener sensor
     Route::get('/getAirQuality', [AirController::class, 'getAirQuality']);
-    Route::get('/getCaloriesBurned', [CalorieController::class, 'getCaloriesBurned']);
-    Route::get('/getDogData', [PetController::class, 'getDogData']);
-    Route::get('/getTempData', [TempController::class, 'getTempData']);
+    Route::get('/getCaloriesBurned', [CalorieController::class, 'getCaloriesBurned']); //Pendiente hasta tener sensor
+    Route::get('/getDogData', [PetController::class, 'getDogData']); //Pendiente hasta tener sensor
+    Route::get('/getTempData', [TempController::class, 'getTempData']); //Pendiente hasta tener sensor
     Route::post('/registerPetYDev', [PetController::class, 'registerPetYDev']);
     Route::get('/getForecast', [ClimaController::class, 'getForecast']);
-    Route::get('/getTempPerHour', [TempController::class, 'getTempPerHour']);
+    Route::get('/getTempPerHour', [TempController::class, 'getTempPerHour']);//Pendiente hasta tener sensor
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');

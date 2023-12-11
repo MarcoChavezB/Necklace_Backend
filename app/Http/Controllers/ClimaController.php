@@ -4,11 +4,26 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClimaController extends Controller
 {
     public function getForecast(Request $request){
         $client = new Client();
+
+
+        $validate = Validator::validate($request->all(), [
+            'coords' => 'required',
+        ],
+            [
+                'coords.required' => 'Las coordenadas son requeridas',
+            ]);
+        if(!$validate){
+            return response()->json([
+                "msg"   => "Error al validar los datos",
+            ], 422);
+        }
+
         $response = $client->request('GET', 'http://api.weatherapi.com/v1/forecast.json', [
             'query' => [
                 'key' => env('WEATHER_API_KEY'),

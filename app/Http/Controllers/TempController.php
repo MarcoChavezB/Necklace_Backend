@@ -66,7 +66,11 @@ class TempController extends Controller
         $date = $data['created_at'];
         $feedId = $data['feed_id'];
 
-        $this->saveTempData($value, $date, $feedId, $PetDeviceId->id);
+        $fechaUTC = new DateTime($date, new \DateTimeZone('UTC'));
+        $fechaUTC -> setTimeZone(new \DateTimeZone('America/Monterrey'));
+        $fechaLocal = $fechaUTC->format('Y-m-d H:i:s');
+
+        $this->saveTempData($value, $fechaLocal, $feedId, $PetDeviceId->id);
 
         if($value < 0){
             return response()->json([
@@ -154,7 +158,7 @@ class TempController extends Controller
             ], 404);
         }
 
-        $testDate = '2023-12-04';
+        $testDate = Carbon::now();
 
         $values = DB::table('device_temp')
             ->select(DB::raw('MIN(id) as id'))
