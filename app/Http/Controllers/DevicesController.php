@@ -75,7 +75,7 @@ class DevicesController extends Controller
         $DevID = Device::where('codigo', $request->input('deviceCode'))->pluck('id')->first();
         if (!$DevID) {
             return response()->json([
-                "msg" => "Dispositivo no encontrado",
+                "linked" => null,
             ], 404);
         }
 
