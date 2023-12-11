@@ -58,7 +58,6 @@ class PetController extends Controller
             ->join('devices', 'devices.id', '=', 'pet_device.device_id')
             ->join('pets', 'pets.id', '=', 'pet_device.pet_id')
             ->select('devices.id')
-            //Attempt to read property "id" on string
             ->where('pets.user_id', $userId)
             ->first();
         if(!$devices){
@@ -383,5 +382,7 @@ class PetController extends Controller
             "msg"=>"Mascota registrada",
         ],201);
     }
+
+
 
 }

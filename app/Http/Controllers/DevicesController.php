@@ -34,7 +34,8 @@ class DevicesController extends Controller
         }
     }
 
-    public function getCountDispo($id){
+    public function getCountDispo($id)
+    {
 
         $userexists = User::where('id', $id)->first();
         if (!$userexists) {
@@ -53,6 +54,39 @@ class DevicesController extends Controller
         ], 200);
 
     }
+
+
+    public function IsDeviceLinked(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'deviceCode' => 'required',
+        ],
+            [
+                'deviceCode.required' => 'El código del dispositivo es requerido',
+            ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "msg" => "Error al validar los datos",
+                "error" => $validate->errors()
+            ], 422);
+        }
+
+        $DevID = Device::where('code', $request->input('deviceCode'))->pluck('id')->first();
+        if (!$DevID) {
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+        }
+
+        $pet_devID = Pet_Device::where('device_id', $DevID)->pluck('pet_id')->first();
+        if (!$pet_devID) {
+            return true;
+        }
+
+        return false;
+    }
+
 
 
 
