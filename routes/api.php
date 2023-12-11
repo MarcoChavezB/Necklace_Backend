@@ -3,6 +3,7 @@
 use App\Http\Controllers\AirController;
 use App\Http\Controllers\CalorieController;
 use App\Http\Controllers\ClimaController;
+use App\Http\Controllers\GpsController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\TempController;
 use Illuminate\Http\Request;
@@ -62,6 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getForecast', [ClimaController::class, 'getForecast']);
     Route::get('/getTempPerHour', [TempController::class, 'getTempPerHour']);
     Route::get('/IsDeviceLinked', [DevicesController::class, 'IsDeviceLinked']);
+    Route::get('/getLocation', [GpsController::class, 'getLocation']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
