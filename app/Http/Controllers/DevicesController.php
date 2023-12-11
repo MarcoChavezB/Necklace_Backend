@@ -72,7 +72,7 @@ class DevicesController extends Controller
             ], 422);
         }
 
-        $DevID = Device::where('code', $request->input('deviceCode'))->pluck('id')->first();
+        $DevID = Device::where('codigo', $request->input('deviceCode'))->pluck('id')->first();
         if (!$DevID) {
             return response()->json([
                 "msg" => "Dispositivo no encontrado",
