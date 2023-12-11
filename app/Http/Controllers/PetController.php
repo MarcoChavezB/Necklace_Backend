@@ -57,7 +57,7 @@ class PetController extends Controller
         $devices = DB::table('pet_device')
             ->join('devices', 'devices.id', '=', 'pet_device.device_id')
             ->join('pets', 'pets.id', '=', 'pet_device.pet_id')
-            ->select('devices.id')
+            ->select('devices.id', 'pets.id')
             ->where('pets.user_id', $userId)
             ->first();
         if(!$devices){
