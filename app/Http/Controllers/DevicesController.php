@@ -81,10 +81,12 @@ class DevicesController extends Controller
 
         $pet_devID = Pet_Device::where('device_id', $DevID)->pluck('pet_id')->first();
         if (!$pet_devID) {
-            return true;
+
+            return response()->json(['linked' => true], 200);
+
         }
 
-        return false;
+        return response()->json(['linked' => false], 200);
     }
 
 
