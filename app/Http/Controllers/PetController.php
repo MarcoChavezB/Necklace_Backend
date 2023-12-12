@@ -393,9 +393,10 @@ class PetController extends Controller
         }
         $pet_device = Pet_Device::where('pet_id', $petId)->first();
         if(!$pet_device){
+            $pet->delete();
             return response()->json([
-                "msg" => "Dispositivo no encontrado",
-            ], 404);
+                "msg" => "Mascota eliminada",
+            ], 201);
         }
 
         DB::transaction(function () use ($pet, $pet_device) {
@@ -407,7 +408,6 @@ class PetController extends Controller
             "msg" => "Mascota eliminada",
         ], 201);
     }
-
 
     public function UpdatePet(Request $request ,$petId){
 
