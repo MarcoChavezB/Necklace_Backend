@@ -64,6 +64,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getTempPerHour', [TempController::class, 'getTempPerHour']);
     Route::get('/IsDeviceLinked', [DevicesController::class, 'IsDeviceLinked']);
     Route::get('/getLocation', [GpsController::class, 'getLocation']);
+    Route::delete('/deletePet/{id}', [PetController::class, 'deletePet']);
+    Route::put('/updatePet/{id}', [PetController::class, 'UpdatePet']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');

@@ -7,6 +7,7 @@ use App\Models\DeviceAir;
 use App\Models\DeviceMov;
 use App\Models\Pet;
 use App\Models\Pet_Device;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -382,6 +383,67 @@ class PetController extends Controller
             "msg"=>"Mascota registrada",
         ],201);
     }
+
+    public function deletePet($petId){
+        $pet = Pet::where('id', $petId)->first();
+        if (!$pet) {
+            return response()->json([
+                "msg" => "Mascota no encontrada",
+            ], 404);
+        }
+        $pet_device = Pet_Device::where('pet_id', $petId)->first();
+        if(!$pet_device){
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+        }
+
+        DB::transaction(function () use ($pet, $pet_device) {
+            $pet_device->delete();
+            $pet->delete();
+        });
+
+        return response()->json([
+            "msg" => "Mascota eliminada",
+        ], 201);
+    }
+
+
+    public function UpdatePet(Request $request ,$petId){
+
+        $validate = Validator::make(
+            $request->all(),
+            [
+                "nombre"   => "required|min:3",
+            ],
+            [
+                "nombre.required" => "El nombre es requerido",
+                "nombre.min" => "El nombre debe tener al menos 3 caracteres",
+            ]
+        );
+
+        if($validate->fails()){
+           return response()->json([
+               "msg" => "Error al validar los datos",
+           ],422);
+        }
+
+        $pet = Pet::where('id', $petId)->first();
+        if (!$pet) {
+            return response()->json([
+                "msg" => "Mascota no encontrada",
+            ], 404);
+        }
+
+        $pet->nombre = $request->nombre;
+
+        $pet->save();
+        return response()->json([
+            "msg" => "Mascota actualizada",
+        ], 201);
+
+    }
+
 
 
 
