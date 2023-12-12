@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SoundController extends Controller
@@ -56,6 +57,21 @@ class SoundController extends Controller
         return response()->json([
             'value' => $value
         ]);
+
+    }
+
+
+    public function getPetDeviceId($deviceCode){
+        $PetDeviceId = DB::table('pet_device')
+            ->join('devices', 'pet_device.device_id', '=', 'devices.id')
+            ->select('pet_device.id')
+            ->where( 'devices.codigo',  $deviceCode)
+            ->first();
+
+        if(!$PetDeviceId){
+            return null;
+        }
+        return $PetDeviceId;
 
     }
 }
