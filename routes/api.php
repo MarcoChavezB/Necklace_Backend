@@ -5,6 +5,7 @@ use App\Http\Controllers\CalorieController;
 use App\Http\Controllers\ClimaController;
 use App\Http\Controllers\GpsController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\SoundController;
 use App\Http\Controllers\TempController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -66,7 +67,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getLocation', [GpsController::class, 'getLocation']);
     Route::delete('/deletePet/{id}', [PetController::class, 'deletePet']);
     Route::put('/updatePet/{id}', [PetController::class, 'UpdatePet']);
-    Route::put('/updateDevicePet/{newPetId}/{deviceCode}', [DevicesController::class, 'updateDevicePet']);
+    Route::put('/updateDevicePet/{newPetId}/{deviceId}', [DevicesController::class, 'updateDevicePet']);
+    Route::get('/getSoundValue', [SoundController::class, 'getSoundValue']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
