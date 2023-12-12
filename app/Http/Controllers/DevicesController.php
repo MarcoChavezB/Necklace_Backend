@@ -90,6 +90,34 @@ class DevicesController extends Controller
     }
 
 
+    public function updateDevicePet($newPetId, $deviceID){
+        $PetID = Pet::where('id', $newPetId)->pluck('id')->first();
+        if(!$PetID){
+            return response()->json([
+                "msg" => "Mascota no encontrada",
+            ], 404);
+
+        }
+
+        $DeviceID = Device::where('id', $deviceID)->first();
+        if(!$DeviceID){
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+
+        }
+
+        $petdevice = Pet_Device::where('device_id', $DeviceID)->first();
+        $petdevice->pet_id = $PetID;
+        $petdevice->save();
+
+        return response()->json([
+            "msg" => "Dispositivo vinculado a nueva mascota",
+        ], 200);
+
+    }
+
+
 
 
     // public function desvincularDispositivo($id)
