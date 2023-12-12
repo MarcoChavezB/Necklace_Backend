@@ -99,7 +99,7 @@ class DevicesController extends Controller
 
         }
 
-        $DeviceID = Device::where('id', $deviceID)->first();
+        $DeviceID = Device::where('id', $deviceID)->pluck('id')->first();
         if(!$DeviceID){
             return response()->json([
                 "msg" => "Dispositivo no encontrado",
