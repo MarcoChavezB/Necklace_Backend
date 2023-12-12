@@ -399,14 +399,9 @@ class PetController extends Controller
             ], 201);
         }
 
-        DB::transaction(function () use ($pet, $pet_device) {
-            $pet_device->delete();
-            $pet->delete();
-        });
-
         return response()->json([
-            "msg" => "Mascota eliminada",
-        ], 201);
+            "msg" => "No se puede eliminar por que ya esta enlazada a un dispositivo",
+        ], 422);
     }
 
     public function UpdatePet(Request $request ,$petId){
