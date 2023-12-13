@@ -79,7 +79,7 @@ class GpsController extends Controller
         }
 
         $data = json_decode($response->getBody(), true);
-        $place = $data['results'][0]['name'];
+        $place = $data['results'][1]['name'];
 
         return $place;
 
