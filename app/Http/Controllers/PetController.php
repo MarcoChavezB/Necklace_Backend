@@ -441,8 +441,8 @@ class PetController extends Controller
 
 
     public function linkPetDisp($petId, $dispId){
-        $pet = Pet::where('id', $petId)->first();
-        $device = Device::where('id', $dispId)->first();
+        $pet = Pet::find($petId);
+        $device = Device::find($dispId);
 
         if (!$device) {
             return response()->json([
@@ -457,8 +457,8 @@ class PetController extends Controller
 
         $alreadylinker = DB::table('pet_device')
             ->select('pet_device.id')
-            ->where('pet_device.device_id', $dispId)
-            ->where('pet_device.pet_id', $petId)
+            ->where('pet_device.device_id', $pet)
+            ->where('pet_device.pet_id', $device)
             ->first();
 
 
