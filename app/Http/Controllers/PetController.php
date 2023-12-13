@@ -455,16 +455,21 @@ class PetController extends Controller
             ], 404);
         }
 
-        $alreadylinker = DB::table('pet_device')
+        $DevAlreadylinked = DB::table('pet_device')
             ->select('pet_device.id')
             ->where('pet_device.device_id', $dispId)
+            ->first();
+
+
+        $PetAlreadylinked = DB::table('pet_device')
+            ->select('pet_device.id')
             ->where('pet_device.pet_id', $petId)
             ->first();
 
 
-        if ($alreadylinker) {
+        if ($DevAlreadylinked || $PetAlreadylinked) {
             return response()->json([
-                "msg" => "Dispositivo ya vinculado previamente",
+                "msg" => "Dispositivo o Mascota ya vinculado previamente",
             ], 422);
         }
 
