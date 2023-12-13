@@ -49,10 +49,39 @@ class GpsController extends Controller
         }
 
         $coords = $data['value'];
+        $place = $this->getPlace($coords);
 
         return response()->json([
-            'value' => $coords
+            'value' => $coords,
+            'place' => $place
         ]);
+
+    }
+
+
+    public function getPlace($coords){
+        $client = new Client();
+
+        try{
+            $response = $client->request('GET', 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?', [
+                'query' => [
+                    'location' => $coords,
+                    'radius' => env('radius'),
+                    'key' => env('key')
+                ]
+            ]);
+
+        }catch (\Exception $e){
+            return response()->json([
+                "msg" => "Error al obtener datos de la API",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+
+        $data = json_decode($response->getBody(), true);
+        $place = $data['results'][0]['name'];
+
+        return $place;
 
     }
 }
