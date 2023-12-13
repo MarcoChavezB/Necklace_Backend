@@ -455,16 +455,23 @@ class PetController extends Controller
             ], 404);
         }
 
-        if (Pet_Device::where('device_id', $device->id)->where('pet_id', $pet->id)->exists()) {
+        $alreadylinker = DB::table('pet_device')
+            ->select('pet_device.id')
+            ->where('pet_device.device_id', $dispId)
+            ->where('pet_device.pet_id', $petId)
+            ->first();
+
+
+        if ($alreadylinker) {
             return response()->json([
                 "msg" => "Dispositivo ya vinculado previamente",
             ], 422);
         }
 
-        Pet_Device::create([
-            'device_id'   => $device->id,
-            'pet_id' => $pet->id,
-        ]);
+        $pd = new Pet_Device();
+        $pd->pet_id = $petId;
+        $pd->device_id = $dispId;
+        $pd->save();
 
         return response()->json([
             "msg" => "Dispositivo vinculado",
