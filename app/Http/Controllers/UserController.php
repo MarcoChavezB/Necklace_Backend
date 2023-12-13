@@ -167,18 +167,16 @@ class UserController extends Controller
 
     public function getPetsWithoutDevice($id)
     {
-
-        $user = User::find($id)->pluck('id')->first();
+        $user = User::find($id);
         if (!$user) {
             return response()->json([
                 "msg" => "No se encontró ningún usuario con el ID proporcionado"
             ], 404);
         }
 
+        $pets = Pet::where('user_id', $user->id)->doesntHave('petDevices')->get(['id', 'nombre']);
 
-        $pets = Pet::where('user_id', $user)->doesntHave('petDevices')->get();
-
-        if (!$pets) {
+        if ($pets->isEmpty()) {
             return response()->json([
                 "pets" => null
             ], 404);
@@ -186,4 +184,5 @@ class UserController extends Controller
 
         return $pets;
     }
+
 }
