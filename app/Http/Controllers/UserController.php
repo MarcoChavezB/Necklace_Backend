@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -164,4 +165,25 @@ class UserController extends Controller
         return response()->json($devices);
     }
 
+    public function getPetsWithoutDevice($id)
+    {
+
+        $user = User::find($id)->pluck('id')->first();
+        if (!$user) {
+            return response()->json([
+                "msg" => "No se encontró ningún usuario con el ID proporcionado"
+            ], 404);
+        }
+
+
+        $pets = Pet::where('user_id', $user)->doesntHave('petDevices')->get();
+
+        if (!$pets) {
+            return response()->json([
+                "pets" => null
+            ], 404);
+        }
+
+        return $pets;
+    }
 }
