@@ -457,8 +457,8 @@ class PetController extends Controller
 
         $alreadylinker = DB::table('pet_device')
             ->select('pet_device.id')
-            ->where('pet_device.device_id', $pet)
-            ->where('pet_device.pet_id', $device)
+            ->where('pet_device.device_id', $dispId)
+            ->where('pet_device.pet_id', $petId)
             ->first();
 
 
