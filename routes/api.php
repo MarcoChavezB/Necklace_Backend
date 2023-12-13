@@ -58,6 +58,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/updatePet/{id}', [PetController::class, 'UpdatePet']);
     Route::put('/updateDevicePet/{newPetId}/{deviceId}', [DevicesController::class, 'updateDevicePet']);
     Route::get('/getSoundValue', [SoundController::class, 'getSoundValue']);
+    Route::post('/linkPetDisp/{petId}/{devId}', [PetController::class, 'linkPetDisp']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');

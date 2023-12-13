@@ -440,6 +440,39 @@ class PetController extends Controller
     }
 
 
+    public function linkPetDisp($petId, $dispId){
+        $pet = Pet::where('id', $petId)->first();
+        $device = Device::where('id', $dispId)->first();
+
+        if (!$device) {
+            return response()->json([
+                "msg" => "Dispositivo no encontrado",
+            ], 404);
+        }
+        if (!$pet) {
+            return response()->json([
+                "msg" => "Mascota no encontrada",
+            ], 404);
+        }
+
+        if (Pet_Device::where('device_id', $device->id)->where('pet_id', $pet->id)->exists()) {
+            return response()->json([
+                "msg" => "Dispositivo ya vinculado previamente",
+            ], 422);
+        }
+
+        Pet_Device::create([
+            'device_id'   => $device->id,
+            'pet_id' => $pet->id,
+        ]);
+
+        return response()->json([
+            "msg" => "Dispositivo vinculado",
+        ], 201);
+
+    }
+
+
 
 
 }
