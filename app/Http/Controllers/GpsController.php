@@ -65,7 +65,7 @@ class GpsController extends Controller
         try{
             $response = $client->request('GET', 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?', [
                 'query' => [
-                    'location' => '25.533605,-103.311376'/*$coords*/,
+                    'location' => $coords,
                     'radius' => env('radius'),
                     'key' => env('key')
                 ]
