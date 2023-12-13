@@ -33,13 +33,13 @@ Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']);
-    Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']);
+    Route::get('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']); //GET
+    Route::post('/perrosxUsuario/{id}', [PetController::class, 'perrosxUsuario']); //GET
     Route::post('/link-device', [PetController::class, 'linkPetToDisp'])->name('link-device');
     Route::post('/unlink-device/{id}', [PetController::class, 'UnlinkPetToDisp'])->name('unlink-device');
-    Route::post('/getcount/{id}', [DevicesController::class, 'getCountDispo']);
+    Route::post('/getcount/{id}', [DevicesController::class, 'getCountDispo']); //GET
     Route::get('/getdislinks', [PetController::class, 'getDisplinks'])->name('Dispositivos vinculados');
-    Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']);
+    Route::post('/infoMascota/{id}', [PetController::class, 'detallesPerro']); //GET
     Route::get('/firstDisp/{id}', [PetController::class, 'PrimerDispxUser']);
     Route::get('/getInfoPerro/{id}', [PetController::class, 'getInfoPerroXIdCollar']);
     Route::post('/registerPet', [PetController::class, 'registerPet']);
