@@ -31,7 +31,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/InfoUsuario/{id}', [UserController::class, 'InfoUsuario']);
 Route::get('/user/{id}', [UserController::class, 'getUserDevices']);
-Route::get('/getPetsWithoutDevice{id}', [UserController::class, 'getPetsWithoutDevice']);
+Route::get('/getPetsWithoutDevice/{id}', [UserController::class, 'getPetsWithoutDevice']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/infoDispositivo/{id}', [PetController::class, 'detallesDispositivo']); //GET
