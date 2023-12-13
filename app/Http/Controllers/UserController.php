@@ -14,7 +14,7 @@ class UserController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth:api', ['except' => ['register', 'login', /*'getUserDevices', 'InfoUsuario'*/]]);
+        $this->middleware('auth:api', ['except' => ['register', 'login']]);
     }
 
     public function login(){
@@ -49,13 +49,13 @@ class UserController extends Controller
         return $this->respondWithToken($token, $credentials['email']);
     }
 
-    protected  function respondWithToken($token, $email){//Aqui se genera el token
+    protected  function respondWithToken($token, $email){
         $isActive = $this->isActive($email);
         return response()->json([
-            'access_token' => $token,//Aqui se especifica el token
-            'token_type' => 'bearer',//Aqui se especifica el tipo de token
+            'access_token' => $token,
+            'token_type' => 'bearer',
             'isActive' => $isActive,
-            'expires_in' => auth()->factory()->getTTL() * 60,//Aqui se especifica el tiempo de expiracion del token (No se establece cuanto durara el token)
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
 

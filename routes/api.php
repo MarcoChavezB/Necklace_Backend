@@ -14,18 +14,6 @@ use App\Http\Controllers\DevicesController;
 use App\Http\Controllers\ActivationController;
 use App\Http\Controllers\HumController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-
 Route::any('/errormsg', function (){
     return response()->json([
         "msg" => "No estas logeado"
