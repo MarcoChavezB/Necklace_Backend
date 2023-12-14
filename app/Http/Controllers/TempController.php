@@ -164,7 +164,6 @@ class TempController extends Controller
             ->select(DB::raw('MIN(id) as id'))
             ->where('pet_device_id', $pet_device_id)
             ->whereDate('created_at', $testDate)
-            ->groupBy(DB::raw('HOUR(created_at)'))
             ->pluck('id');
 
         $records = DB::table('device_temp')
