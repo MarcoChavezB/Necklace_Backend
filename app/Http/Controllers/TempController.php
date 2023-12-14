@@ -200,7 +200,6 @@ class TempController extends Controller
             ], 422);
         }
 
-
         $deviceCode = $request->input('deviceCode');
         $devId = $this->getDevId($deviceCode);
 
@@ -224,8 +223,10 @@ class TempController extends Controller
             ->select('value', 'created_at')
             ->where('pet_device_id', $pet_device_id)
             ->whereDate('created_at', $testDate)
+            ->groupBy('created_at')
             ->orderBy(DB::raw('HOUR(created_at)'))
             ->get();
         return response()->json($values, 200);
     }
+
 }
