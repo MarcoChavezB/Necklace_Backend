@@ -224,7 +224,8 @@ class TempController extends Controller
             ->select('value', 'created_at')
             ->where('pet_device_id', $pet_device_id)
             ->whereDate('created_at', $testDate)
-            ->groupBy(DB::raw('HOUR(created_at)'));
+            ->groupBy(DB::raw('HOUR(created_at)'))
+            ->pluck('value', 'created_at');
 
         return response()->json($values, 200);
     }
