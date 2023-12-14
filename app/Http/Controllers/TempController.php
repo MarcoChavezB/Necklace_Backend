@@ -220,12 +220,13 @@ class TempController extends Controller
         $testDate = Carbon::today();
 
         $values = DB::table('device_temp')
-            ->select('value', 'created_at')
+            ->select(DB::raw('MAX(value) as value'), 'created_at')
             ->where('pet_device_id', $pet_device_id)
             ->whereDate('created_at', $testDate)
             ->groupBy('created_at')
             ->orderBy(DB::raw('HOUR(created_at)'))
             ->get();
+
         return response()->json($values, 200);
     }
 
