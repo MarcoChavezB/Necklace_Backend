@@ -52,7 +52,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getTempData', [TempController::class, 'getTempData']);
     Route::post('/registerPetYDev', [PetController::class, 'registerPetYDev']);
     Route::get('/getForecast', [ClimaController::class, 'getForecast']);
-    Route::get('/getTempPerHour', [TempController::class, 'getTempPerHour']);
+    Route::get('/getTempPerHour', [TempController::class, 'getTemperatreFromBD']);
     Route::get('/IsDeviceLinked', [DevicesController::class, 'IsDeviceLinked']);
     Route::get('/getLocation', [GpsController::class, 'getLocation']);
     Route::delete('/deletePet/{id}', [PetController::class, 'deletePet']);

@@ -184,4 +184,49 @@ class TempController extends Controller
 
 
     }
+
+
+    public function getTemperatreFromBD(Request $request){
+        $validate = Validator::make($request->all(), [
+            'deviceCode' => 'required',
+        ],
+            [
+                'deviceCode.required' => 'El código del dispositivo es requerido',
+            ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "msg"   => "Error al validar los datos",
+            ], 422);
+        }
+
+
+        $deviceCode = $request->input('deviceCode');
+        $devId = $this->getDevId($deviceCode);
+
+        if(!$devId){
+            return response()->json([
+                "msg" => "Registro no encontrado",
+            ], 404);
+        }
+
+        $pet_device_id = DB::table('pet_device')->where('device_id', $devId)->value('id');
+
+        if (!$pet_device_id) {
+            return response()->json([
+                "msg" => "Registro no encontrado",
+            ], 404);
+        }
+
+        $testDate = Carbon::today();
+
+        $values = DB::table('device_temp')
+            ->select('value', 'created_at')
+            ->where('pet_device_id', $pet_device_id)
+            ->whereDate('created_at', $testDate)
+            ->groupBy(DB::raw('HOUR(created_at)'))
+            ->get();
+
+        return response()->json($values, 200);
+    }
 }
