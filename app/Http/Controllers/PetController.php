@@ -231,13 +231,39 @@ class PetController extends Controller
             ], 500);
         }
 
-        $restTime = $this->calculateRestTime($activityData); // Calcular el tiempo de reposo
-        $happinessLevel = $this->calculateHappinessLevel($activityData); // Calcular el nivel de felicidad
+
+        $devMov = new DeviceMov();
+        $devId = $this->getPetDeviceId($request->input('deviceCode'));
+
+        $lastFiveRecords = $devMov->orderBy('created_at', 'desc')
+            ->where('pet_device_id', $devId->id)
+            ->take(5)
+            ->get();
+
+        foreach ($lastFiveRecords as $record) {
+            if($record->value != 1){
+                return response()->json([
+                    "probablyHappy" => false,
+                    "probablyResting" => false,
+                ], 200);
+            };
+        }
 
         return response()->json([
-            'restTime' => $restTime,
-            'happinessLevel' => $happinessLevel
-        ]);
+            "probablyHappy" => true,
+            "probablyResting" => true,
+        ], 200);
+
+
+
+
+//        $restTime = $this->calculateRestTime($activityData); // Calcular el tiempo de reposo
+//        $happinessLevel = $this->calculateHappinessLevel($activityData); // Calcular el nivel de felicidad
+//
+//        return response()->json([
+//            'restTime' => $restTime,
+//            'happinessLevel' => $happinessLevel
+//        ]);
     }
 
     private function getActivityData($deviceCode)

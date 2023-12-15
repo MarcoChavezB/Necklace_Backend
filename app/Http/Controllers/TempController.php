@@ -201,6 +201,7 @@ class TempController extends Controller
         }
 
         $deviceCode = $request->input('deviceCode');
+        $this->getTempData($deviceCode);
         $devId = $this->getDevId($deviceCode);
 
         if(!$devId){
