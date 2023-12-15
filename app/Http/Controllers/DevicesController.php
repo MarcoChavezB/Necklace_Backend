@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet_Device;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -115,6 +116,72 @@ class DevicesController extends Controller
             "msg" => "Dispositivo vinculado a nueva mascota",
         ], 200);
 
+    }
+
+
+
+
+    public function TurnOnLed($value){
+        $client = new Client();
+
+        try{
+
+            $client->request('POST','https://io.adafruit.com/api/v2/MarcoChavez/feeds/led/data',[
+                'headers' => [
+                    'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
+                ],
+                'json' => [
+                    'value' => $value
+                ]
+            ]);
+            if($value == 1){
+                return response()->json([
+                    "on" => true
+                ]);
+            }
+            else if($value == 0) {
+                return response()->json([
+                    "on" => false
+                ]);
+            }
+        }catch (\Exception $e){
+            return response()->json([
+                "msg" => "Error al obtener datos de la API",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function TurnOnBuzzer($value){
+        $client = new Client();
+
+        try{
+
+            $client->request('POST','https://io.adafruit.com/api/v2/MarcoChavez/feeds/buzzer/data',[
+                'headers' => [
+                    'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
+                ],
+                'json' => [
+                    'value' => $value
+                ]
+            ]);
+            if($value == 1){
+                return response()->json([
+                    "on" => true
+                ]);
+            }
+            else if($value == 0) {
+                return response()->json([
+                    "on" => false
+                ]);
+            }
+        }catch (\Exception $e){
+            return response()->json([
+                "msg" => "Error al obtener datos de la API",
+                "error" => $e->getMessage()
+            ], 500);
+        }
     }
 
 

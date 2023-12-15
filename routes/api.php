@@ -62,7 +62,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getSoundValue', [SoundController::class, 'getSoundValue']);
     Route::post('/linkPetDisp/{petId}/{devId}', [PetController::class, 'linkPetDisp']);
     Route::get('/getRainValue', [RainController::class, 'getRainValue']);
-    Route::post('/TurnOnLed/{value}', [LedController::class, 'TurnOnLed']);
+    Route::post('/TurnOnLed/{value}', [DevicesController::class, 'TurnOnLed']);
+    Route::post('/TurnOffBuzzer/{value}', [DevicesController::class, 'TurnOffBuzzer']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
