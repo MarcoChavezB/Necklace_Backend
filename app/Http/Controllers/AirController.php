@@ -76,23 +76,23 @@ class AirController extends Controller
             ]);
         }elseif ($value >= 51 && $value <= 100){
             return response()->json([
-                'nivel' => 2
+                'nivel' => 1
             ]);
         }elseif ($value >= 101 && $value <= 150){
             return response()->json([
-                'nivel' => 3
+                'nivel' => 1
             ]);
         }elseif ($value >= 151 && $value <= 200){
             return response()->json([
-                'nivel' => 4
+                'nivel' => 1
             ]);
         }elseif ($value >= 201 && $value <= 300){
             return response()->json([
-                'nivel' => 5
+                'nivel' => 1
             ]);
         }elseif ($value >= 301){
             return response()->json([
-                'nivel' => 6
+                'nivel' => 1
             ]);
         }
 
