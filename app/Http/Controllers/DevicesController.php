@@ -167,7 +167,7 @@ class DevicesController extends Controller
                 ]
             ]);
             if($value == 1){
-                sleep(2);
+                sleep(1);
                 $this->TurnOffBuzzer(0);
                 return response()->json([
                     "on" => true
