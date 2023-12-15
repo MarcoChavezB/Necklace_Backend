@@ -167,6 +167,8 @@ class DevicesController extends Controller
                 ]
             ]);
             if($value == 1){
+                sleep(2);
+                $this->TurnOffBuzzer(0);
                 return response()->json([
                     "on" => true
                 ]);
@@ -183,6 +185,29 @@ class DevicesController extends Controller
             ], 500);
         }
     }
+
+
+    public function TurnOffBuzzer($value){
+        $client = new Client();
+
+        try{
+
+            $client->request('POST','https://io.adafruit.com/api/v2/MarcoChavez/feeds/buzzer/data',[
+                'headers' => [
+                    'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
+                ],
+                'json' => [
+                    'value' => $value
+                ]
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                "msg" => "Error al obtener datos de la API",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 
