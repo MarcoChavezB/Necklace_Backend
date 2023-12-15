@@ -13,7 +13,7 @@ class LedController extends Controller
 
         try{
 
-            $response = $client->request('POST','https://io.adafruit.com/api/v2/MarcoChavez/feeds/led/data',[
+            $client->request('POST','https://io.adafruit.com/api/v2/MarcoChavez/feeds/led/data',[
                 'headers' => [
                     'X-AIO-Key' => env('ADAFRUIT_IO_KEY')
                 ],
@@ -21,11 +21,16 @@ class LedController extends Controller
                     'value' => $value
                 ]
             ]);
-
-            return response()->json([
-                "on" => $response
-            ]);
-
+            if($value == 1){
+                return response()->json([
+                    "on" => true
+                ]);
+            }
+            else if($value == 0) {
+                return response()->json([
+                    "on" => false
+                ]);
+            }
         }catch (\Exception $e){
             return response()->json([
                 "msg" => "Error al obtener datos de la API",
