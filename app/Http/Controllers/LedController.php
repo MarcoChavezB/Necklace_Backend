@@ -21,8 +21,9 @@ class LedController extends Controller
                     'value' => $value
                 ]
             ]);
+
             return response()->json([
-                "on" => true
+                "on" => $response
             ]);
 
         }catch (\Exception $e){
