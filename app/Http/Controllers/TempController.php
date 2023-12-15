@@ -13,25 +13,25 @@ Use \DateTime;
 
 class TempController extends Controller
 {
-    public function getTempData(Request $request){
+    public function getTempData($deviceCode){
         $client = new Client();
         $feedName = "-temp-value";
 
-        $validate = Validator::make($request->all(), [
-            'deviceCode' => 'required',
-        ],
-            [
-                'deviceCode.required' => 'El código del dispositivo es requerido',
-            ]);
+//        $validate = Validator::make($request->all(), [
+//            'deviceCode' => 'required',
+//        ],
+//            [
+//                'deviceCode.required' => 'El código del dispositivo es requerido',
+//            ]);
+//
+//        if ($validate->fails()) {
+//            return response()->json([
+//                "msg"   => "Error al validar los datos",
+//                "error" => $validate->errors()
+//            ], 422);
+//        }
 
-        if ($validate->fails()) {
-            return response()->json([
-                "msg"   => "Error al validar los datos",
-                "error" => $validate->errors()
-            ], 422);
-        }
-
-        $PetDeviceId = $this->getPetDeviceId($request->input('deviceCode'));
+        $PetDeviceId = $this->getPetDeviceId($deviceCode);
         if(!$PetDeviceId){
             return response()->json([
                 "msg" => "Registro no encontrado",
