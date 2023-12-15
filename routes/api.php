@@ -63,7 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/linkPetDisp/{petId}/{devId}', [PetController::class, 'linkPetDisp']);
     Route::get('/getRainValue', [RainController::class, 'getRainValue']);
     Route::post('/TurnOnLed/{value}', [DevicesController::class, 'TurnOnLed']);
-    Route::post('/TurnOffBuzzer/{value}', [DevicesController::class, 'TurnOffBuzzer']);
+    Route::post('/TurnOnBuzzer/{value}', [DevicesController::class, 'TurnOnBuzzer']);
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
