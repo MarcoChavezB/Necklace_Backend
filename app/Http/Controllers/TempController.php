@@ -186,7 +186,7 @@ class TempController extends Controller
     }
 
 
-    public function getTemperatreFromBD(Request $request){
+    public function getTemperatureFromBD(Request $request){
         $validate = Validator::make($request->all(), [
             'deviceCode' => 'required',
         ],
@@ -217,14 +217,11 @@ class TempController extends Controller
             ], 404);
         }
 
-        $testDate = Carbon::today();
-
         $values = DB::table('device_temp')
-            ->select(DB::raw('MAX(value) as value'), 'created_at')
+            ->select('value', 'created_at')
             ->where('pet_device_id', $pet_device_id)
-            ->whereDate('created_at', $testDate)
-            ->groupBy('created_at')
-            ->orderBy(DB::raw('HOUR(created_at)'))
+            ->orderBy('created_at', 'desc')
+            ->take(5)
             ->get();
 
         return response()->json($values, 200);
