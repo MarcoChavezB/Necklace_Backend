@@ -38,7 +38,7 @@ class TempController extends Controller
             ], 404);
         }
 
-        $devCode = $request->deviceCode;
+        $devCode = $deviceCode;
         $feedKey = $devCode.$feedName;
 
         try {
