@@ -9,7 +9,9 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\RainController;
 use App\Http\Controllers\SoundController;
 use App\Http\Controllers\TempController;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DevicesController;
@@ -64,6 +66,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getRainValue', [RainController::class, 'getRainValue']);
     Route::post('/TurnOnLed/{value}', [DevicesController::class, 'TurnOnLed']);
     Route::post('/TurnOnBuzzer/{value}', [DevicesController::class, 'TurnOnBuzzer']);
+
+
 });
 
 Route::any('/activation/{user}', [ActivationController::class, 'activate'])->name('activation');
@@ -73,6 +77,13 @@ Route::any('/getServerTime', function (){
         "msg" => date("Y-m-d H:i:s")
     ], 200);
 })->name('getServerTime');
+
+
+Route::any('/Test', [UserController::class, 'serverTime']);
+Route::post('/sanctum/login', [\App\Http\Controllers\SanctumController::class, 'loginSanctum']);
+Route::any('/TestSanctum', [\App\Http\Controllers\SanctumController::class, 'serverTimeSanctum'])->middleware('auth:sanctum');
+
+
 
 
 

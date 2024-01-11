@@ -18,6 +18,16 @@ class UserController extends Controller
         $this->middleware('auth:api', ['except' => ['register', 'login']]);
     }
 
+
+
+    public  function serverTime ()
+    {
+        return response()->json([
+            "msg" => date("Y-m-d H:i:s")
+        ], 200);
+    }
+
+
     public function login(){
         $credentials = request(['email', 'password']);
 
